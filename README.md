@@ -1,45 +1,166 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# MS 3 Project
 
-Welcome colmfah,
+Purpose of Project
+======
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+Create a website that lists U2's best songs, allows fans to rate the songs and add new songs to the list.
 
-## Gitpod Reminders
+User Stories
+======
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+As **a user**, I want to **view the most popular U2 songs** and **rate them with a score**.
 
-`python3 -m http.server`
+As **a user**, I want to **propose new songs to add to the list**.
 
-A blue button should appear to click: *Make Public*,
+As **a user**, I want to **review the proposals of other users** and **vote in favour or against them**.
 
-Another blue button should appear to click: *Open Browser*.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+Features
+====== 
 
-A blue button should appear to click: *Make Public*,
+#### Home Page:
 
-Another blue button should appear to click: *Open Browser*.
+The home page will contain a header, footer, an image of U2 and an explanation of the site.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+The image that appears will be one of a number that is saved on the database and selected randomly.
 
-## Updates Since The Instructional Video
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+#### Best Songs Page:
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+This page will contain a header and footer and a card for each song.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+Initally it will include every song from U2's two best of albums.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+The card for each song will display an image, some summary information about the song, the average rating that users have given the song and the rating (if any) that the logged in user has given the song.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+#### Potential Best Songs:
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+This page will contain a header and footer, a paragraph with instructions, a button to propose a new song and a card for each song that has already been proposed by users.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+Each card will contain an image, some summary information and a option for users to vote in favour or against adding the song to the list of best songs.
 
---------
+When the number of votes in favour of a song is greater than the number of votes against the song by ten votes, that song will be removed from this page and will be found in the best songs page.
 
-Happy coding!
+#### Potential Best Songs:
+
+This page will contain a header and footer, a form for new songs to propose and a button to submit the form.
+
+It will display an error if the song has already been submitted.
+
+If the song is successfully added, it will then be displayed in the potential best songs page and the user will be redirected.
+
+#### Sign Up Page:
+
+This page will contain a header and footer and a form to provide email address and password.
+
+It will also provide a link to the log in page for users that have already registered.
+
+It will check that the email is valid and that the password has a certain length.
+
+If these conditions are not met, it will display an error.
+
+Otherwise it will create a new user, log them in and redirect to the best songs page.
+
+
+#### Log In Page:
+
+This page will contain a header and footer and a form to provide email address and password.
+
+It will also provide a link to the sign up page for users that have not yet registered.
+
+It will check that the password is the correct password for that user.
+
+If it is not, it will display an error.
+
+Otherwise it will log the user in and redirect to the best songs page.
+
+
+#### Header:
+
+In the header, I will include a nav bar that has links to the home page, best songs page, potential best songs page, log in or sign up page, search option and a sort option. This will be on every page.
+
+#### Footer:
+
+In the footer, I will include links to the U2 page on social media platforms. These will open in a new window. This will be on every page.
+
+
+#### Product Limitations:
+
+
+
+#### Future Features:
+
+
+
+
+Typography and Color Scheme:
+======
+
+
+
+
+Skeleton:
+======
+
+Wireframes are available [here](/docs/wireframes.pdf)
+
+
+
+Technology:
+======
+
+HTML5
+CSS3
+Gitpod
+
+
+Best Practices:
+======
+
+
+
+Testing:
+======
+
+
+
+#### Test cases:
+
+
+
+
+
+#### Fixed Issues:
+
+
+
+#### Open Issues:
+
+
+
+Version control:
+======
+
+This project was developed using Gitpod, committed to git and pushed to GitHub using the built in function within Gidpod.
+
+Deployment:
+======
+
+
+
+Credits:
+======
+
+
+
+
+Acknowledgements: 
+======
+My Code Institute Mentor, Rohit
+
+
+
+
+
+
