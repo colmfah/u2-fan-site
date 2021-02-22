@@ -22,9 +22,7 @@ mongo = PyMongo(app)
 @app.route("/get_songs")
 def get_songs():
     songs = mongo.db.songs.find()
-    print(os.environ.get("MONGO_DBNAME"))
-    print(os.environ.get("MONGO_URI"))
-    print(os.environ.get("SECRET_KEY"))
+    print(songs[0]['title'])
 
     return render_template("songs.html", songs=songs)
 
