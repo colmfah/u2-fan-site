@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+<h2>I'm extending the base template</h2>
+{% for song in songs %}
+{{ song.title}}
+{% endfor %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Songs</title>
-</head>
-
-<body>
-    <h1>Songs</h1>
-    {% for song in songs %}
-    {{ song.title}}
-    {% endfor %}
-</body>
-
-</html>
+{% endblock %}
