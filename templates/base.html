@@ -25,6 +25,7 @@
                     <li><a href="#">Best Songs</a></li>
                     <li><a href="#">Contenders</a></li>
                     <li><a href="#">Propose New Songs</a></li>
+                    <li><a href="{{ url_for('profile', username=session['user'])}}">Profile</a></li>
                     <li><a href="{{ url_for('login')}}">Log In</a></li>
                     <li><a href="{{ url_for('register')}}">Register</a></li>
                 </ul>
@@ -41,6 +42,7 @@
             <li><a href="#">Best Songs</a></li>
             <li><a href="#">Contenders</a></li>
             <li><a href="#">Propose New Songs</a></li>
+            <li><a href="{{ url_for('profile', username=session['user'])}}">Profile</a></li>
             <li><a href="{{ url_for('login')}}">Log In</a></li>
             <li><a href="{{ url_for('register')}}">Register</a></li>
         </ul>
