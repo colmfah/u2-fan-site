@@ -4,15 +4,18 @@
 <h3 class="light-blue-text text-darken4 center-align">Add Song</h3>
 
 <div class="row card-panel grey lighten-5">
-    <form class="col s12" method="POST" action="">
+    <form class="col s12" method="POST" action="{{ url_for('add_song') }}">
+
+        <!-- Song Name -->
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">music_note</i>
-                <input id="song_name" name="song_name" minlength="5" maxlength="50" type="text" class="validate"
-                    required>
-                <label for="song_name">Song Name</label>
+                <input id="title" name="title" minlength="3" maxlength="50" type="text" class="validate" required>
+                <label for="title">Song Name</label>
             </div>
         </div>
+
+        <!-- Song Year -->
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">date_range</i>
@@ -22,7 +25,7 @@
         </div>
 
 
-
+        <!-- Song Description -->
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">border_color</i>
@@ -32,6 +35,14 @@
             </div>
         </div>
 
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button class="btn waves-effect waves-light center-align" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
 
 
 

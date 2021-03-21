@@ -95,8 +95,23 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_song")
+@app.route("/add_song", methods=["GET", "POST"])
 def add_song():
+    if request.method == "POST":
+        song = {
+            "title": request.form.get("title"),
+            "year": request.form.get("year"),
+            "description": request.form.get("description"),
+            "onBestOfAlbum": True,
+            "created_by": session["user"],
+            "upVotes": 0,
+            "downVotes": 0
+
+        }
+        mongo.db.songs.insert_one(song)
+        flash("Song Successfully Added")
+        return redirect(url_for("get_songs"))
+
     return render_template("add_song.html")
 
 
