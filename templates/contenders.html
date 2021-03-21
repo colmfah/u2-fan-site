@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="light-blue-text text-darken4 center-align">Contenders</h3>
+
+<ul class="collapsible">
+    {% for song in songs %}
+    <li>
+        <div class="collapsible-header white-text #212121 grey darken-4 accordion-flex">
+
+            <div class="song-summary">
+                <i class="material-icons drop-down-arrow-icon">arrow_drop_down</i>
+                <div class="song-title-and-year">
+                    <strong>{{ song.title }}</strong>
+                    ({{ song.year }})
+                </div>
+            </div>
+
+            <div class="thumb-flex">
+                <div class="individual-thumb">
+                    <i class="material-icons icon-no-margin">thumb_up</i>
+                    <div class="vote-number">{{ song.upVotes }}</div>
+                </div>
+
+
+                <div>
+                    <i class="material-icons icon-no-margin">thumb_down</i>
+                    <div class="vote-number">{{ song.downVotes }}</div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+        <div class="collapsible-body" style="white-space: pre-line"><span>{{ song.description }}</span></div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -19,12 +19,37 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+def get_best_songs(song):
+    if song["onBestOfAlbum"]:
+        return True
+    elif song["upVotes"] - song["downVotes"] >= 10:
+        return True
+    else:
+        return False
+
+
+def get_contender_songs(song):
+    if song["onBestOfAlbum"]:
+        return False
+    elif song["upVotes"] - song["downVotes"] < 10:
+        return True
+
+
 @app.route("/")
 @app.route("/get_songs")
 def get_songs():
-    songs = list(mongo.db.songs.find())
+    all_songs = list(mongo.db.songs.find())
+    best_songs = filter(get_best_songs, all_songs)
 
-    return render_template("songs.html", songs=songs)
+    return render_template("songs.html", songs=best_songs)
+
+
+@app.route("/get_contenders")
+def get_contenders():
+    all_songs = list(mongo.db.songs.find())
+    contenders = filter(get_contender_songs, all_songs)
+
+    return render_template("contenders.html", songs=contenders)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -102,11 +127,10 @@ def add_song():
             "title": request.form.get("title"),
             "year": request.form.get("year"),
             "description": request.form.get("description"),
-            "onBestOfAlbum": True,
+            "onBestOfAlbum": False,
             "created_by": session["user"],
             "upVotes": 0,
             "downVotes": 0
-
         }
         mongo.db.songs.insert_one(song)
         flash("Song Successfully Added")
