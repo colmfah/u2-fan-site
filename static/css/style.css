@@ -1,6 +1,7 @@
 
-.body{
-    position: relative;
+
+nav .brand-logo{
+    font-size: clamp(25px, 4vw, 40px) !important;
 }
 
 .flashes h4{
