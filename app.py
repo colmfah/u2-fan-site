@@ -22,8 +22,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_songs")
 def get_songs():
-    songs = mongo.db.songs.find()
-    print(songs[0]['title'])
+    songs = list(mongo.db.songs.find())
 
     return render_template("songs.html", songs=songs)
 

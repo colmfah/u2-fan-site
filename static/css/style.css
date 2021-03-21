@@ -1,3 +1,75 @@
+
+.body{
+    position: relative;
+}
+
 .flashes h4{
     line-height: 4
+}
+
+.accordion-flex{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    
+    justify-content: space-between;
+   
+}
+
+.thumb-flex{
+    justify-content: center;
+    display: flex;
+    margin-top: 10px;
+}
+
+.icon-no-margin{
+    margin-right: 0 !important;
+}
+
+.vote-number{
+    text-align: center
+}
+
+.individual-thumb{
+    margin-right: 1rem;
+}
+
+.song-summary{
+    margin: auto;
+    position: relative;
+ 
+    display:flex;
+    flex-direction: column;
+  justify-content: center;
+}
+
+.song-title-and-year{
+    margin-left: 2rem;
+}
+
+.collapsible{
+    width: 80vw;
+    max-width: 650px;
+    margin: auto;
+}
+
+.drop-down-arrow-icon{
+    position: absolute !important;
+}
+
+
+
+@media screen and (min-width: 400px) {
+  .accordion-flex {
+    flex-direction: row
+  }
+
+  .thumb-flex{
+      margin-top: 0px;
+  }
+
+  .song-summary{
+      margin: 0
+  }
 }

@@ -1,26 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-{% for song in songs %}
-{{ song.title }}
-{% endfor %}
 
 <ul class="collapsible">
+    {% for song in songs %}
     <li>
-        <div class="collapsible-header white-text light-blue darken-4"><i
-                class="material-icons">arrow_drop_down</i>First
+        <div class="collapsible-header white-text #212121 grey darken-4 accordion-flex">
+
+            <div class="song-summary">
+                <i class="material-icons drop-down-arrow-icon">arrow_drop_down</i>
+                <div class="song-title-and-year">
+                    <strong>{{ song.title }}</strong>
+                    ({{ song.year }})
+                </div>
+            </div>
+
+            <div class="thumb-flex">
+                <div class="individual-thumb">
+                    <i class="material-icons icon-no-margin">thumb_up</i>
+                    <div class="vote-number">{{ song.upVotes }}</div>
+                </div>
+
+
+                <div>
+                    <i class="material-icons icon-no-margin">thumb_down</i>
+                    <div class="vote-number">{{ song.downVotes }}</div>
+                </div>
+
+
+
+            </div>
+
+
         </div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        <div class="collapsible-body" style="white-space: pre-line"><span>{{ song.description }}</span></div>
     </li>
-    <li>
-        <div class="collapsible-header white-text light-blue darken-4"><i
-                class="material-icons">arrow_drop_down</i>Second</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-        <div class="collapsible-header white-text light-blue darken-4"><i
-                class="material-icons">arrow_drop_down</i>Third</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}
