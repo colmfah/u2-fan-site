@@ -154,6 +154,16 @@ Credits:
 
 add space in html: https://www.wikihow.com/Insert-Spaces-in-HTML
 
+length of list in jinja:
+https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-template
+
+
+Mongo commands
+
+https://www.w3schools.com/python/python_mongodb_update.asp
+https://docs.mongodb.com/manual/reference/operator/update/unset/
+https://stackoverflow.com/questions/22901788/remove-attribute-from-all-mongodb-documents-using-python-and-pymongo
+
 
 
 

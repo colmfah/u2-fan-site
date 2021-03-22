@@ -1,4 +1,5 @@
 import os
+import functools
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -22,8 +23,8 @@ mongo = PyMongo(app)
 def get_best_songs(song):
     if song["onBestOfAlbum"]:
         return True
-    elif song["upVotes"] - song["downVotes"] >= 10:
-        return True
+    # elif len(song["upVotes"]) - len(song["downVotes"]) >= 10:
+    #     return True
     else:
         return False
 
@@ -31,8 +32,20 @@ def get_best_songs(song):
 def get_contender_songs(song):
     if song["onBestOfAlbum"]:
         return False
-    elif song["upVotes"] - song["downVotes"] < 10:
+    # elif len(song["upVotes"]) - len(song["downVotes"]) < 10:
+    #     return True
+    else:
         return True
+
+
+def calculate_ratings(song):
+
+    if len(song["reviews"]) == 0:
+        song["rating"] = 0
+    else:
+        song["rating"] = functools.reduce(lambda a, b: a+b, [1, 2])
+
+    return song
 
 
 @app.route("/")
@@ -40,11 +53,13 @@ def get_contender_songs(song):
 def get_songs():
     all_songs = list(mongo.db.songs.find())
     best_songs = filter(get_best_songs, all_songs)
+    print(all_songs, "all songs")
+    best_songs_with_ratings = map(calculate_ratings, best_songs)
 
-    return render_template("songs.html", songs=best_songs)
+    return render_template("songs.html", songs=best_songs_with_ratings)
 
 
-@app.route("/get_contenders")
+@ app.route("/get_contenders")
 def get_contenders():
     all_songs = list(mongo.db.songs.find())
     contenders = filter(get_contender_songs, all_songs)
@@ -52,7 +67,7 @@ def get_contenders():
     return render_template("contenders.html", songs=contenders)
 
 
-@app.route("/register", methods=["GET", "POST"])
+@ app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
@@ -77,7 +92,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/login", methods=["GET", "POST"])
+@ app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
@@ -101,7 +116,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/profile/<username>", methods=["GET", "POST"])
+@ app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab the session user's username from the db
     username = mongo.db.users.find_one(
@@ -112,7 +127,7 @@ def profile(username):
     return redirect(url_for("login"))
 
 
-@app.route("/logout")
+@ app.route("/logout")
 def logout():
     # remove user from session cookies
     flash("You have been logged out")
@@ -120,7 +135,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_song", methods=["GET", "POST"])
+@ app.route("/add_song", methods=["GET", "POST"])
 def add_song():
     if request.method == "POST":
         song = {
@@ -137,6 +152,11 @@ def add_song():
         return redirect(url_for("get_songs"))
 
     return render_template("add_song.html")
+
+
+@app.route("/edit_thumbs_up/<song_id>", methods=["GET", "POST"])
+def edit_thumbs_up(song_id):
+    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
 
 
 if __name__ == "__main__":

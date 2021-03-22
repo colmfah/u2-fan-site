@@ -17,15 +17,15 @@
             </div>
 
             <div class="thumb-flex">
-                <div class="individual-thumb">
+                <div class="individual-thumb" onclick="upVote(event)">
                     <i class="material-icons icon-no-margin">thumb_up</i>
-                    <div class="vote-number">{{ song.upVotes }}</div>
+                    <div class="vote-number">{{ song.upVotes|length }}</div>
                 </div>
 
 
                 <div>
                     <i class="material-icons icon-no-margin">thumb_down</i>
-                    <div class="vote-number">{{ song.downVotes }}</div>
+                    <div class="vote-number">{{ song.downVotes|length }}</div>
                 </div>
 
 
