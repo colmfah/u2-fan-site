@@ -158,6 +158,9 @@ length of list in jinja:
 https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-template
 
 
+Get average: https://stackoverflow.com/questions/9039961/finding-the-average-of-a-list
+
+
 Mongo commands
 
 https://www.w3schools.com/python/python_mongodb_update.asp

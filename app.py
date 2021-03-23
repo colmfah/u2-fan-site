@@ -1,5 +1,5 @@
 import os
-import functools
+import statistics
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -39,21 +39,21 @@ def get_contender_songs(song):
 
 
 def calculate_ratings(song):
-
     if len(song["reviews"]) == 0:
         song["rating"] = 0
     else:
-        song["rating"] = functools.reduce(lambda a, b: a+b, [1, 2])
-
+        reviews = song["reviews"]
+        ratings = map(lambda x: x["rating"], reviews)
+        average_rating = statistics.mean(ratings)
+        song["rating"] = average_rating
     return song
 
 
-@app.route("/")
-@app.route("/get_songs")
+@ app.route("/")
+@ app.route("/get_songs")
 def get_songs():
     all_songs = list(mongo.db.songs.find())
     best_songs = filter(get_best_songs, all_songs)
-    print(all_songs, "all songs")
     best_songs_with_ratings = map(calculate_ratings, best_songs)
 
     return render_template("songs.html", songs=best_songs_with_ratings)
@@ -63,8 +63,9 @@ def get_songs():
 def get_contenders():
     all_songs = list(mongo.db.songs.find())
     contenders = filter(get_contender_songs, all_songs)
+    contenders_with_ratings = map(calculate_ratings, contenders)
 
-    return render_template("contenders.html", songs=contenders)
+    return render_template("contenders.html", songs=contenders_with_ratings)
 
 
 @ app.route("/register", methods=["GET", "POST"])
@@ -154,7 +155,7 @@ def add_song():
     return render_template("add_song.html")
 
 
-@app.route("/edit_thumbs_up/<song_id>", methods=["GET", "POST"])
+@ app.route("/edit_thumbs_up/<song_id>", methods=["GET", "POST"])
 def edit_thumbs_up(song_id):
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
 
