@@ -34,6 +34,13 @@ nav .brand-logo{
 
 .individual-thumb{
     margin-right: 1rem;
+    margin-right: 1rem;
+    justify-self: center;
+    align-self: center;
+    background-color: white;
+    color: #212121;
+    padding: 0 3.5px;
+    border-radius: 5px;
 }
 
 .song-summary{
