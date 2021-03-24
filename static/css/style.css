@@ -18,7 +18,7 @@ nav .brand-logo{
    
 }
 
-.thumb-flex{
+.review-flex{
     justify-content: center;
     display: flex;
     margin-top: 10px;
@@ -28,11 +28,11 @@ nav .brand-logo{
     margin-right: 0 !important;
 }
 
-.vote-number{
+.rating-number{
     text-align: center
 }
 
-.individual-thumb{
+.reviews-link{
     margin-right: 1rem;
     margin-right: 1rem;
     justify-self: center;
@@ -44,7 +44,6 @@ nav .brand-logo{
 }
 
 .song-summary{
-    margin: auto;
     position: relative;
  
     display:flex;
@@ -68,12 +67,12 @@ nav .brand-logo{
 
 
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 605px) {
   .accordion-flex {
     flex-direction: row
   }
 
-  .thumb-flex{
+  .review-flex{
       margin-top: 0px;
   }
 
