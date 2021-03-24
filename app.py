@@ -155,9 +155,31 @@ def add_song():
     return render_template("add_song.html")
 
 
-@ app.route("/edit_thumbs_up/<song_id>", methods=["GET", "POST"])
-def edit_thumbs_up(song_id):
+@ app.route("/get_reviews/<song_id>", methods=["GET", "POST"])
+def get_reviews(song_id):
+
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+    users_who_reviewed = list(
+        map(lambda review: review["user"], song["reviews"]))
+    user_review = False
+    user_review_exists = False
+    user_logged_in = False
+    if "user" in session:
+        user_logged_in = True
+        user_review_exists = session["user"] in users_who_reviewed
+
+    if user_review_exists:
+        user_review = song["reviews"][users_who_reviewed.index(
+            session["user"])]
+
+    return render_template("get_reviews.html",
+                           song=song, user_review_exists=user_review_exists, user_review=user_review)
+
+
+@ app.route("/edit_song/<song_id>", methods=["GET", "POST"])
+def edit_song(song_id):
+    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+    return render_template("get_reviews.html", song=song)
 
 
 if __name__ == "__main__":

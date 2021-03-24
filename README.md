@@ -160,6 +160,8 @@ https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-te
 
 Get average: https://stackoverflow.com/questions/9039961/finding-the-average-of-a-list
 
+Check if key exists in dictionary: https://stackoverflow.com/questions/1602934/check-if-a-given-key-already-exists-in-a-dictionary
+
 
 Mongo commands
 

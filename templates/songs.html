@@ -17,9 +17,9 @@
             </div>
 
             <div class="review-flex">
-                <div class="reviews-link" onclick="upVote(event)">
+                <a href="{{ url_for('get_reviews', song_id=song._id) }}" class="reviews-link">
                     Reviews
-                </div>
+                </a>
 
                 <div>
                     <i class="material-icons icon-no-margin">star</i>
