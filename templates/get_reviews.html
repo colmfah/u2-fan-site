@@ -4,16 +4,70 @@
 <h3 class="light-blue-text text-darken4 center-align">{{ song.title  }} Reviews</h3>
 
 <div class="row card-panel grey lighten-5">
+
+
+
+    {% if user_review_exists %}
+    <form class="col s12" method="POST" action="{{ url_for('edit_song', song_id=song._id) }}">
+        <h4>edit your review</h4>
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button class="btn waves-effect waves-light center-align" type="submit">Update Review
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% elif user_logged_in %}
+
     <form class="col s12" method="POST" action="{{ url_for('edit_song', song_id=song._id) }}">
 
-
-        {% if user_review_exists %}
-
-        <h4>edit your review</h4>
-
-        {% elif user_logged_in %}
-
         <h4>post a review</h4>
+
+        <!-- code based on https://codepen.io/jamesbarnett/pen/vlpkh -->
+
+        <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
+                title="Awesome - 5 stars" onclick="changeRating(5)"></label>
+            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half"
+                title="Pretty good - 4.5 stars" onclick="changeRating(4.5)"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
+                title="Pretty good - 4 stars" onclick="changeRating(4)"></label>
+            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half"
+                title="Meh - 3.5 stars" onclick="changeRating(3.5)"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
+                title="Meh - 3 stars" onclick="changeRating(3)"></label>
+            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half"
+                title="Kinda bad - 2.5 stars" onclick="changeRating(2.5)"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
+                title="Kinda bad - 2 stars" onclick="changeRating(2)"></label>
+            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half"
+                title="Meh - 1.5 stars" onclick="changeRating(1.5)"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
+                title="Sucks big time - 1 star" onclick="changeRating(1)"></label>
+            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf"
+                title="Sucks big time - 0.5 stars" onclick="changeRating(0.5)"></label>
+        </fieldset>
+        <!-- Written Review -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix light-blue-text text-darken-4">border_color</i>
+                <textarea id="description" name="description" class="materialize-textarea validate" minlength="10"
+                    maxlength="1000" required></textarea>
+                <label for="description">What do you think of this song?</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button class="btn waves-effect waves-light center-align" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
 
         {% endif %}
 
@@ -36,19 +90,7 @@
 
 
 
-        <!-- Submit Button -->
-        <div class="row">
-            <div class="col s12 center-align">
-                <button class="btn waves-effect waves-light center-align" type="submit">Submit Review
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </div>
 
-
-
-
-    </form>
 </div>
 
 

@@ -173,7 +173,7 @@ def get_reviews(song_id):
             session["user"])]
 
     return render_template("get_reviews.html",
-                           song=song, user_review_exists=user_review_exists, user_review=user_review)
+                           song=song, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
 @ app.route("/edit_song/<song_id>", methods=["GET", "POST"])
