@@ -22,41 +22,41 @@
 
     {% elif user_logged_in %}
 
-    <form class="col s12" method="POST" action="{{ url_for('edit_song', song_id=song._id) }}">
+    <h4>post a review</h4>
 
-        <h4>post a review</h4>
+    <form class="col s12" method="POST" action="{{ url_for('edit_song', song_id=song._id) }}">
 
         <!-- code based on https://codepen.io/jamesbarnett/pen/vlpkh -->
 
         <fieldset class="rating">
             <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
                 title="Awesome - 5 stars" onclick="changeRating(5)"></label>
-            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half"
+            <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half"
                 title="Pretty good - 4.5 stars" onclick="changeRating(4.5)"></label>
             <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
                 title="Pretty good - 4 stars" onclick="changeRating(4)"></label>
-            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half"
+            <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half"
                 title="Meh - 3.5 stars" onclick="changeRating(3.5)"></label>
             <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
                 title="Meh - 3 stars" onclick="changeRating(3)"></label>
-            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half"
+            <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half"
                 title="Kinda bad - 2.5 stars" onclick="changeRating(2.5)"></label>
             <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
                 title="Kinda bad - 2 stars" onclick="changeRating(2)"></label>
-            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half"
+            <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half"
                 title="Meh - 1.5 stars" onclick="changeRating(1.5)"></label>
             <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
                 title="Sucks big time - 1 star" onclick="changeRating(1)"></label>
-            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf"
+            <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf"
                 title="Sucks big time - 0.5 stars" onclick="changeRating(0.5)"></label>
         </fieldset>
         <!-- Written Review -->
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">border_color</i>
-                <textarea id="description" name="description" class="materialize-textarea validate" minlength="10"
+                <textarea id="review" name="review" class="materialize-textarea validate" minlength="10"
                     maxlength="1000" required></textarea>
-                <label for="description">What do you think of this song?</label>
+                <label for="review">What do you think of this song?</label>
             </div>
         </div>
 
@@ -68,19 +68,20 @@
                 </button>
             </div>
         </div>
+    </form>
 
-        {% endif %}
+    {% endif %}
 
-        {% for review in song.reviews %}
+    {% for review in song.reviews %}
 
-        <div>{{ review.review }}</div>
-        <div>{{ review.rating }}</div>
-        <div>{{ review.user }}</div>
+    <div>{{ review.review }}</div>
+    <div>{{ review.rating }}</div>
+    <div>{{ review.user }}</div>
 
-        {% endfor %}
+    {% endfor %}
 
-        <!-- Song Name -->
-        <!-- <div class="row">
+    <!-- Song Name -->
+    <!-- <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">music_note</i>
                 <input id="title" name="title" minlength="3" maxlength="50" type="text" class="validate" required>

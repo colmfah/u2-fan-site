@@ -49,6 +49,26 @@ def calculate_ratings(song):
     return song
 
 
+def get_reviews(song_id):
+
+    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+    users_who_reviewed = list(
+        map(lambda review: review["user"], song["reviews"]))
+    user_review = False
+    user_review_exists = False
+    user_logged_in = False
+    if "user" in session:
+        user_logged_in = True
+        user_review_exists = session["user"] in users_who_reviewed
+
+    if user_review_exists:
+        user_review = song["reviews"][users_who_reviewed.index(
+            session["user"])]
+
+    return render_template("get_reviews.html",
+                           song=song, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
+
+
 @ app.route("/")
 @ app.route("/get_songs")
 def get_songs():
@@ -178,8 +198,42 @@ def get_reviews(song_id):
 
 @ app.route("/edit_song/<song_id>", methods=["GET", "POST"])
 def edit_song(song_id):
-    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
-    return render_template("get_reviews.html", song=song)
+    if request.method == "POST":
+        song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+
+        print("song reviews", song["reviews"])
+
+        review = {
+            "user": session["user"],
+            "rating": int(request.form.get("rating")),
+            "review": request.form.get("review")
+        }
+
+        # print("review", review)
+
+        song["reviews"].append(review)
+
+        mongo.db.songs.update({"_id": ObjectId(song_id)}, song)
+        flash("Review Saved")
+        song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+        users_who_reviewed = list(
+            map(lambda review: review["user"], song["reviews"]))
+        user_review = False
+        user_review_exists = False
+        user_logged_in = False
+        if "user" in session:
+            user_logged_in = True
+            user_review_exists = session["user"] in users_who_reviewed
+
+        if user_review_exists:
+            user_review = song["reviews"][users_who_reviewed.index(
+                session["user"])]
+
+        return render_template("get_reviews.html",
+                               song=song, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
+
+    # def edit_song(song_id):
+    # if request.method == "POST":
 
 
 if __name__ == "__main__":
