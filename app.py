@@ -45,7 +45,7 @@ def calculate_ratings(song):
         reviews = song["reviews"]
         ratings = map(lambda x: x["rating"], reviews)
         average_rating = statistics.mean(ratings)
-        song["rating"] = average_rating
+        song["rating"] = round(average_rating, 1)
     return song
 
 
