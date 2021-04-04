@@ -207,8 +207,8 @@ def get_reviews(song_id):
                            song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
-@ app.route("/edit_song/<song_id>", methods=["GET", "POST"])
-def edit_song(song_id):
+@ app.route("/edit_review/<song_id>", methods=["GET", "POST"])
+def edit_review(song_id):
     if request.method == "POST":
 
         review = {
