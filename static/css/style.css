@@ -1,6 +1,6 @@
-a {
+/* a {
     color: #fff
-}
+} */
 
 
 /* code based on https://codepen.io/jamesbarnett/pen/vlpkh */
@@ -118,7 +118,12 @@ nav .brand-logo{
 }
 
 .star {
-    margin-right: 0 !important
+    margin-right: 0 !important;
+    
+}
+
+.star-and-rating{
+color: #fff;
 }
 
 
