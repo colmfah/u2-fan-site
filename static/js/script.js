@@ -47,13 +47,10 @@ function loaded(userRating) {
 }
 
 function submitReview(event) {
-    console.log('event', event)
-    console.log('rating', rating)
 
-    if (rating === 0) {
+    if (rating === 0 && !warnedAboutZeroVote) {
         event.preventDefault()
         document.getElementsByClassName('warning')[0].style.display = "block"
         document.querySelectorAll("fieldset")[0].style.border = "3px solid tomato"
-
     }
 }

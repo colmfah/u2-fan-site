@@ -1,4 +1,6 @@
-
+a {
+    color: #fff
+}
 
 
 /* code based on https://codepen.io/jamesbarnett/pen/vlpkh */
@@ -70,9 +72,7 @@ nav .brand-logo{
     margin-top: 10px;
 }
 
-.icon-no-margin{
-    margin-right: 0 !important;
-}
+
 
 .rating-number{
     text-align: center
@@ -116,6 +116,8 @@ nav .brand-logo{
     display: none;
     padding: 0 !important;
 }
+
+
 
 
 
