@@ -111,6 +111,12 @@ nav .brand-logo{
     position: absolute !important;
 }
 
+.warning{
+    color: tomato;
+    display: none;
+    padding: 0 !important;
+}
+
 
 
 @media screen and (min-width: 605px) {

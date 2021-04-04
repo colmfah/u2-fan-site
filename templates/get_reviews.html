@@ -18,7 +18,7 @@
     {% if user_review_exists %}
     <form class="col s12" method="POST" action="{{ url_for('edit_song', song_id=song._id) }}">
         <h4>edit your review</h4>
-        <fieldset class="rating">
+        <fieldset class="rating" required>
             <input type="radio" id="star5" name="rating" value="5" /><label class="full starSystem" for="star5"
                 title="Awesome - 5 stars" onclick="changeRating(5)" onload="loaded()"></label>
             <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half starSystem"
@@ -92,7 +92,10 @@
             <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf"
                 title="Sucks big time - 0.5 stars" onclick="changeRating(0.5)"></label>
         </fieldset>
+
+
         <!-- Written Review -->
+        <div class="warning col s12">Minimum Rating Allowed is 0.5</div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">border_color</i>
@@ -105,7 +108,9 @@
         <!-- Submit Button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button class="btn waves-effect waves-light center-align" type="submit">Submit
+
+                <button class="btn waves-effect waves-light center-align" type="submit"
+                    onclick="submitReview(event)">Submit
                     <i class="material-icons right">send</i>
                 </button>
             </div>

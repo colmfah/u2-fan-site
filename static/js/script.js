@@ -38,14 +38,22 @@ function changeRating(newRating) {
 
 function loaded(userRating) {
     let elms = document.querySelectorAll("input")
-
-
     for (i = 0; i < elms.length; i++) {
-
         if (userRating >= elms[i].value) {
             elms[i].checked = true
             break
         }
     }
+}
 
+function submitReview(event) {
+    console.log('event', event)
+    console.log('rating', rating)
+
+    if (rating === 0) {
+        event.preventDefault()
+        document.getElementsByClassName('warning')[0].style.display = "block"
+        document.querySelectorAll("fieldset")[0].style.border = "3px solid tomato"
+
+    }
 }
