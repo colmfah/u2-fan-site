@@ -39,10 +39,11 @@ def get_contender_songs(song):
 
 
 def calculate_ratings(song):
-    if len(song["reviews"]) == 0:
+    reviews = list(mongo.db.reviews.find({"song": ObjectId(song["_id"])}))
+    print("reviews", reviews)
+    if len(reviews) == 0:
         song["rating"] = 0
     else:
-        reviews = song["reviews"]
         ratings = map(lambda x: x["rating"], reviews)
         average_rating = statistics.mean(ratings)
         song["rating"] = round(average_rating, 1)
@@ -185,12 +186,8 @@ def get_reviews(song_id):
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
 
-    print("reviews", list(reviews))
-
     users_who_reviewed = list(
         map(lambda review: review["user"], reviews))
-
-    print("users_who_reviewed", users_who_reviewed)
 
     user_review = False
     user_review_exists = False
@@ -199,7 +196,7 @@ def get_reviews(song_id):
         user_logged_in = True
         userID = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
-        print("userID", userID)
+
         user_review_exists = userID in users_who_reviewed
 
     if user_review_exists:
@@ -215,8 +212,6 @@ def edit_song(song_id):
     if request.method == "POST":
         song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
 
-        print("song reviews", song["reviews"])
-
         review = {
             "user": session["user"],
             "rating": int(request.form.get("rating")),
@@ -229,7 +224,7 @@ def edit_song(song_id):
         flash("Review Saved")
 
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
-    reviews = mongo.db.reviews.find({"song": ObjectId(song_id)})
+    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
 
     users_who_reviewed = list(
         map(lambda review: review["user"], reviews))
@@ -239,15 +234,17 @@ def edit_song(song_id):
     user_logged_in = False
     if "user" in session:
         user_logged_in = True
-        userID = mongo.db.users.find_one({"username": session["user"]})
+        userID = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+
         user_review_exists = userID in users_who_reviewed
 
-        if user_review_exists:
-            user_review = song["reviews"][users_who_reviewed.index(
-                session["user"])]
+    if user_review_exists:
+        user_review = reviews[users_who_reviewed.index(
+            session["user"])]
 
-        return render_template("get_reviews.html",
-                               song=song, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
+    return render_template("get_reviews.html",
+                           song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
     # def edit_song(song_id):
     # if request.method == "POST":
