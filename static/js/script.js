@@ -17,9 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
     var instances = M.Dropdown.init(elems);
 });
 
-function upVote(event, song) {
+let reviewLinks = document.getElementsByClassName("reviews-link");
+
+console.log('reviewLinks', reviewLinks)
+
+let myFunction = function () {
+    var attribute = this.getAttribute("data-myattribute");
+    console.log(attribute);
+};
+
+Array.from(reviewLinks).forEach((e, i) => { reviewLinks[i].addEventListener('click', stopPropagation, false); })
+
+
+
+function stopPropagation(event) {
+    console.log('stopPropagation')
     event.stopPropagation()
-    console.log('upVoted')
+
 }
 
 function changeRating(newRating) {
