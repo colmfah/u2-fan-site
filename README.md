@@ -164,6 +164,10 @@ Check if key exists in dictionary: https://stackoverflow.com/questions/1602934/c
 
 Star rating: https://codepen.io/jamesbarnett/pen/vlpkh
 
+https://stackoverflow.com/questions/8206565/check-uncheck-checkbox-with-javascript
+
+
+
 
 Mongo commands
 

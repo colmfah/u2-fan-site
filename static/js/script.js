@@ -35,3 +35,17 @@ function stopPropagation(event) {
 function changeRating(newRating) {
     rating = newRating
 }
+
+function loaded(userRating) {
+    let elms = document.querySelectorAll("input")
+
+
+    for (i = 0; i < elms.length; i++) {
+
+        if (userRating >= elms[i].value) {
+            elms[i].checked = true
+            break
+        }
+    }
+
+}
