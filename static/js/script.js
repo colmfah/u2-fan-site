@@ -17,9 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var instances = M.Dropdown.init(elems);
 });
 
-let reviewLinks = document.getElementsByClassName("reviews-link");
-
-console.log('reviewLinks', reviewLinks)
+let reviewLinks = document.getElementsByClassName("review-flex");
 
 let myFunction = function () {
     var attribute = this.getAttribute("data-myattribute");
@@ -31,12 +29,9 @@ Array.from(reviewLinks).forEach((e, i) => { reviewLinks[i].addEventListener('cli
 
 
 function stopPropagation(event) {
-    console.log('stopPropagation')
     event.stopPropagation()
-
 }
 
 function changeRating(newRating) {
     rating = newRating
-    console.log('rating', rating)
 }

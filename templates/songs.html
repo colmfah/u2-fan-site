@@ -16,19 +16,25 @@
                 </div>
             </div>
 
-            <div class="review-flex">
-                <a href="{{ url_for('get_reviews', song_id=song._id) }}" class="reviews-link">
-                    Reviews
-                </a>
+            <a href="{{ url_for('get_reviews', song_id=song._id) }}">
+                <div class="review-flex">
 
-                <div>
-                    <i class="material-icons icon-no-margin">star</i>
-                    <div class="rating-number">{{ song.rating }}</div>
+                    <div class="reviews-link">
+                        Reviews
+                    </div>
+
+
+
+                    <div>
+                        <i class="material-icons icon-no-margin">star</i>
+                        <div class="rating-number">{{ song.rating }}</div>
+                    </div>
                 </div>
+            </a>
 
 
 
-            </div>
+        </div>
 
 
         </div>
