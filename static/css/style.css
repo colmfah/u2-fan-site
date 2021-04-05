@@ -54,7 +54,7 @@ nav .brand-logo{
 }
 
 nav {
-    width: 100%
+    width: 100%;
 }
 
 .flashes h4{
@@ -158,6 +158,30 @@ color: #fff;
 .song-title{
     font-size: clamp(15px, 5vw, 30px);
     color: black !important; 
+}
+
+.u2-image{
+    width: 100%;
+}
+
+.about{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.color-red{
+    color: #fe0000;
+    margin: auto;
+    padding:0;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+img{
+    margin:0;
+    padding: 0;
 }
 
 

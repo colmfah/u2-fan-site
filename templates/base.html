@@ -21,8 +21,8 @@
                 <a href="{{ url_for('get_songs')}}" class="brand-logo">U2 Fan Site</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('get_songs')}}">Home</a></li>
-                    <li><a href="#">Best Songs</a></li>
+                    <li><a href="{{ url_for('home')}}">Home</a></li>
+                    <li><a href="{{ url_for('get_songs')}}">Best Songs</a></li>
                     <li><a href="{{ url_for('get_contenders')}}">Contenders</a></li>
                     {% if session.user %}
                     <li><a href="{{ url_for('add_song')}}">Propose New Songs</a></li>
@@ -42,8 +42,8 @@
             <li>
                 <h4 class="center-align">U2 Fan Site</h4>
             </li>
-            <li><a href="{{ url_for('get_songs')}}">Home</a></li>
-            <li><a href="#">Best Songs</a></li>
+            <li><a href="{{ url_for('home')}}">Home</a></li>
+            <li><a href="{{ url_for('get_songs')}}">Best Songs</a></li>
             <li><a href="{{ url_for('get_contenders')}}">Contenders</a></li>
             {% if session.user %}
             <li><a href="{{ url_for('add_song')}}">Propose New Songs</a></li>

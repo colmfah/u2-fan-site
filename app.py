@@ -66,13 +66,10 @@ def calculate_ratings(song):
 
 
 def get_reviews(song_id):
-
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-
     users_who_reviewed = list(
         map(lambda review: review["user"], reviews))
-
     user_review = False
     user_review_exists = False
     user_logged_in = False
@@ -80,18 +77,20 @@ def get_reviews(song_id):
         user_logged_in = True
         userID = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
-
         user_review_exists = userID in users_who_reviewed
-
     if user_review_exists:
         user_review = reviews[users_who_reviewed.index(
             session["user"])]
-
     return render_template("get_reviews.html",
                            song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
 @ app.route("/")
+@ app.route("/home")
+def home():
+    return render_template("home.html")
+
+
 @ app.route("/get_songs")
 def get_songs():
     all_songs = list(mongo.db.songs.find())
@@ -99,7 +98,6 @@ def get_songs():
     best_songs_with_ratings = list(map(calculate_ratings, best_songs))
     best_songs_with_ratings.sort(reverse=True,
                                  key=lambda song: song["rating"])
-
     return render_template("songs.html", songs=best_songs_with_ratings)
 
 
