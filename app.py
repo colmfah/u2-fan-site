@@ -50,28 +50,30 @@ def calculate_ratings(song):
     return song
 
 
-# def get_reviews(song_id):
+def get_reviews(song_id):
 
-#     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
-#     reviews = mongo.db.reviews.find({"song": ObjectId(song_id)})
+    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
+    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
 
-#     users_who_reviewed = list(
-#         map(lambda review: review["user"], reviews))
+    users_who_reviewed = list(
+        map(lambda review: review["user"], reviews))
 
-#     user_review = False
-#     user_review_exists = False
-#     user_logged_in = False
-#     if "user" in session:
-#         user_logged_in = True
-#         userID = mongo.db.users.find_one({"username": session["user"]})
-#         user_review_exists = userID in users_who_reviewed
+    user_review = False
+    user_review_exists = False
+    user_logged_in = False
+    if "user" in session:
+        user_logged_in = True
+        userID = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
 
-#     if user_review_exists:
-#         user_review = song["reviews"][users_who_reviewed.index(
-#             session["user"])]
+        user_review_exists = userID in users_who_reviewed
 
-#     return render_template("get_reviews.html",
-#                            song=song, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
+    if user_review_exists:
+        user_review = reviews[users_who_reviewed.index(
+            session["user"])]
+
+    return render_template("get_reviews.html",
+                           song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
 @ app.route("/")
@@ -258,8 +260,12 @@ def edit_review(song_id):
     return render_template("get_reviews.html",
                            song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
-    # def edit_song(song_id):
-    # if request.method == "POST":
+
+@app.route("/delete_review/<user_review_id>")
+def delete_review(user_review_id):
+    mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
+    flash("Review Deleted")
+    return redirect(url_for("get_songs"))
 
 
 if __name__ == "__main__":

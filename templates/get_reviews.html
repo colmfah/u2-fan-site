@@ -59,8 +59,24 @@
                     <i class="material-icons right">send</i>
                 </button>
             </div>
+
         </div>
+
+        <!-- Delete Button -->
+
+        <div class="row">
+            <div class="col s12 center-align">
+                <a href="{{ url_for('delete_review', user_review_id=user_review._id, song_id=song._id) }}"
+                    class="btn waves-effect waves-light center-align">Delete
+                    Review
+                </a>
+            </div>
+
+        </div>
+
+
     </form>
+
 
     {% elif user_logged_in %}
 
@@ -124,6 +140,8 @@
     <div>{{ review.review }}</div>
     <div>{{ review.rating }}</div>
     <div>{{ review.user }}</div>
+
+
 
     {% endfor %}
 
