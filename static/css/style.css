@@ -43,6 +43,10 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
 
+html body{
+    padding: 0;
+    margin: 0;
+}
 
 
 nav .brand-logo{
@@ -50,7 +54,7 @@ nav .brand-logo{
 }
 
 nav {
-    min-width: 100vw;
+    width: 100%
 }
 
 .flashes h4{
