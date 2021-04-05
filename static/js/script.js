@@ -60,7 +60,7 @@ function loaded(userRating) {
             rating = rating - 0.5
         }
 
-        e.outerHTML = codeToRender
+        e.outerHTML = `<div class=center-align>${codeToRender}</div>`
     })
 
 
