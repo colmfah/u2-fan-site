@@ -20,6 +20,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+def float_trunc(num):
+    if round(num, 1) > int(num):
+        return round(num, 1)
+    return int(num)
+
+
 def get_best_songs(song):
     if song["onBestOfAlbum"]:
         return True
@@ -46,7 +52,7 @@ def calculate_ratings(song):
     else:
         ratings = map(lambda x: x["rating"], reviews)
         average_rating = statistics.mean(ratings)
-        song["rating"] = round(average_rating, 1)
+        song["rating"] = float_trunc(average_rating)
     return song
 
 
