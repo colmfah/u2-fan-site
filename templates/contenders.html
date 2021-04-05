@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken4 center-align">Contenders</h3>
+<h3 class="light-blue-text text-darken4 center-align song-title">Contenders</h3>
 
 <ul class="collapsible">
     {% for song in songs %}
@@ -16,22 +16,26 @@
                 </div>
             </div>
 
-            <div class="review-flex">
-                <div class="reviews-link" onclick="upVote(event)">
-                    Reviews
+            <a href="{{ url_for('get_reviews', song_id=song._id) }}">
+                <div class="review-flex">
+
+                    <div class="reviews-link">
+                        Reviews
+                    </div>
+
+
+
+                    <div class="star-and-rating">
+                        <i class="material-icons star">star</i>
+                        <div class="rating-number">{{ song.rating }}</div>
+                    </div>
                 </div>
+            </a>
 
-                <div>
-                    <i class="material-icons icon-no-margin">star</i>
-                    <div class="rating-number">{{ song.rating }}</div>
-                </div>
-
-
-
-            </div>
 
 
         </div>
+
         <div class="collapsible-body" style="white-space: pre-line"><span>{{ song.description }}</span></div>
     </li>
     {% endfor %}

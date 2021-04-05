@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken4 center-align">U2's Best Songs</h3>
+<h3 class="light-blue-text text-darken4 center-align song-title">U2's Best Songs</h3>
 
 <ul class="collapsible">
     {% for song in songs %}
@@ -36,8 +36,6 @@
 
         </div>
 
-
-        </div>
         <div class="collapsible-body" style="white-space: pre-line"><span>{{ song.description }}</span></div>
     </li>
     {% endfor %}
