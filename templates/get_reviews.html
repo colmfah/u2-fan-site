@@ -3,7 +3,6 @@
 
 <script>
     let userRating = {{ user_review.rating| safe }}
-
     window.addEventListener('load', (event) => {
         loaded(userRating)
     });
@@ -11,16 +10,17 @@
 
 <h3 class="light-blue-text text-darken4 center-align">{{ song.title  }} Reviews</h3>
 
+
+
+
+
+{% if user_review_exists %}
 <div class="row card-panel grey lighten-5">
-
-
-
-    {% if user_review_exists %}
     <form class="col s12" method="POST" action="{{ url_for('edit_review', song_id=song._id) }}">
         <h4>edit your review</h4>
         <fieldset class="rating" required>
             <input type="radio" id="star5" name="rating" value="5" /><label class="full starSystem" for="star5"
-                title="Awesome - 5 stars" onclick="changeRating(5)" onload="loaded()"></label>
+                title="Awesome - 5 stars" onclick="changeRating(5)"></label>
             <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half starSystem"
                 for="star4half" title="Pretty good - 4.5 stars" onclick="changeRating(4.5)"></label>
             <input type="radio" id="star4" name="rating" value="4" /><label class="full starSystem" for="star4"
@@ -76,9 +76,12 @@
 
 
     </form>
+</div>
 
 
-    {% elif user_logged_in %}
+{% elif user_logged_in %}
+
+<div class="row card-panel grey lighten-5">
 
     <h4>post a review</h4>
 
@@ -133,20 +136,27 @@
         </div>
     </form>
 
-    {% endif %}
+</div>
 
-    {% for review in reviews %}
+{% endif %}
+
+{% for review in reviews %}
+
+<div class="row card-panel grey lighten-5">
 
     <div>{{ review.review }}</div>
-    <div>{{ review.rating }}</div>
+    <div class="review-stars">{{ review.rating }}</div>
+
     <div>{{ review.user }}</div>
 
+</div>
 
 
-    {% endfor %}
 
-    <!-- Song Name -->
-    <!-- <div class="row">
+{% endfor %}
+
+<!-- Song Name -->
+<!-- <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">music_note</i>
                 <input id="title" name="title" minlength="3" maxlength="50" type="text" class="validate" required>
@@ -157,7 +167,6 @@
 
 
 
-</div>
 
 
 {% endblock %}

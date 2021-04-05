@@ -37,6 +37,7 @@ function changeRating(newRating) {
 }
 
 function loaded(userRating) {
+
     let elms = document.querySelectorAll("input")
     for (i = 0; i < elms.length; i++) {
         if (userRating >= elms[i].value) {
@@ -44,11 +45,31 @@ function loaded(userRating) {
             break
         }
     }
+
+    let reviews = Array.from(document.getElementsByClassName("review-stars"))
+    reviews.forEach(e => {
+        let rating = Number(e.innerHTML)
+        let codeToRender = ``
+        while (rating >= 1) {
+            codeToRender += `<i class="material-icons star">star</i>`
+            rating--
+        }
+
+        while (rating >= 0.5) {
+            codeToRender += `<i class="material-icons star">star_half</i>`
+            rating = rating - 0.5
+        }
+
+        e.outerHTML = codeToRender
+    })
+
+
+
 }
 
 function submitReview(event) {
 
-    if (rating === 0 && !warnedAboutZeroVote) {
+    if (rating === 0) {
         event.preventDefault()
         document.getElementsByClassName('warning')[0].style.display = "block"
         document.querySelectorAll("fieldset")[0].style.border = "3px solid tomato"
