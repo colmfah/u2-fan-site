@@ -133,7 +133,7 @@ color: #fff;
 }
 
 .write-review{
-    width: clamp(400px, 400px, 600px);
+    width: clamp(200px, 80vw, 800px);
     padding: 0 10px;
     margin: auto;
     margin-top: 50px;
@@ -147,8 +147,7 @@ color: #fff;
 
 .review{
     width: fit-content;
-    margin: 5% 0% 0% 5%;
-    /* min-width: 150px; */
+    margin: 2.5% 2.5% 2.5% 2.5%;
 }
 
 .reviews-wrapper{
