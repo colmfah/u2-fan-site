@@ -166,6 +166,8 @@ Star rating: https://codepen.io/jamesbarnett/pen/vlpkh
 
 https://stackoverflow.com/questions/8206565/check-uncheck-checkbox-with-javascript
 
+https://stackoverflow.com/questions/7774814/remove-white-space-below-image
+
 
 
 
