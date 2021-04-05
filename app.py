@@ -261,15 +261,15 @@ def edit_review(song_id):
                 {"username": session["user"]})["username"]
             user_review_exists = userID in users_who_reviewed
 
-            # if user_review_exists:
-            #     relevant_review = list(
-            #         filter(lambda review: review["user"] == session["user"], reviews))
-            #     reviewID = relevant_review[0]["_id"]
-            #     mongo.db.reviews.update({"_id": ObjectId(reviewID)}, review)
-            # else:
-            #     mongo.db.reviews.insert_one(review)
+            if user_review_exists:
+                relevant_review = list(
+                    filter(lambda review: review["user"] == session["user"], reviews))
+                reviewID = relevant_review[0]["_id"]
+                mongo.db.reviews.update({"_id": ObjectId(reviewID)}, review)
+            else:
+                mongo.db.reviews.insert_one(review)
 
-            mongo.db.reviews.insert_one(review)
+            # mongo.db.reviews.insert_one(review)
             flash("Review Saved")
 
             song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
