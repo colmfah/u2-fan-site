@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken4 center-align">Add Song</h3>
+<h3 class="light-blue-text text-darken4 center-align song-title">Add Song</h3>
 
-<div class="row card-panel grey lighten-5">
+<div class="row card-panel grey lighten-5 write-review">
     <form class="col s12" method="POST" action="{{ url_for('add_song') }}">
 
         <!-- Song Name -->
