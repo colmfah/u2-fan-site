@@ -127,16 +127,9 @@ nav {
 color: #fff;
 }
 
-.review-stars{
-    margin: auto;
-    border: 1px solid red;
-}
-
 .write-review{
     width: clamp(200px, 80vw, 800px);
-    padding: 0 10px;
-    margin: auto;
-    margin-top: 50px;
+    margin: 20px auto;
 }
 
 .fieldset-wrapper{
@@ -147,7 +140,7 @@ color: #fff;
 
 .review{
     width: fit-content;
-    margin: 2.5% 2.5% 2.5% 2.5%;
+    margin: 20px;
 }
 
 .reviews-wrapper{
