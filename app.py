@@ -87,7 +87,9 @@ def get_reviews(song_id):
 def get_songs():
     all_songs = list(mongo.db.songs.find())
     best_songs = filter(get_best_songs, all_songs)
-    best_songs_with_ratings = map(calculate_ratings, best_songs)
+    best_songs_with_ratings = list(map(calculate_ratings, best_songs))
+    best_songs_with_ratings.sort(reverse=True,
+                                 key=lambda song: song["rating"])
 
     return render_template("songs.html", songs=best_songs_with_ratings)
 
@@ -267,7 +269,7 @@ def edit_review(song_id):
                            song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
-@app.route("/delete_review/<user_review_id>")
+@ app.route("/delete_review/<user_review_id>")
 def delete_review(user_review_id):
     mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
     flash("Review Deleted")
