@@ -168,6 +168,8 @@ https://stackoverflow.com/questions/8206565/check-uncheck-checkbox-with-javascri
 
 https://stackoverflow.com/questions/7774814/remove-white-space-below-image
 
+https://www.ginifab.com/feeds/pms/color_picker_from_image.php
+
 
 
 
