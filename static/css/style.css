@@ -64,7 +64,8 @@ nav {
     width: 100%;
     position: fixed;
     top: 0;
-    z-index:99999
+    z-index:99999;
+    border-bottom: 1px solid #fe0000;
 }
 
 .flashes h4{
