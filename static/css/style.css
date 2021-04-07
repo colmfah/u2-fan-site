@@ -59,6 +59,15 @@ nav {
 
 .flashes h4{
     line-height: 4;
+    margin: 0;
+    display: block;
+}
+
+.flashes{
+    background-color: rgba(0,0,0,0.87);
+    color:#fe0000;
+    margin: 0;
+    display: block;
 }
 
 .accordion-flex{
