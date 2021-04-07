@@ -161,11 +161,15 @@ color: #fff;
 }
 
 .u2-image{
-    width: 100%;
+    max-height: 80vh;
+}
+
+.u2-image-wrapper{
+    background-color: rgba(0,0,0,0.87);
 }
 
 .about{
-    background-color: black;
+    background-color: rgba(0,0,0,0.87);
     color: white;
     padding: 20px;
     font-size: 20px;
@@ -183,6 +187,7 @@ img{
     display: block;
     margin:0;
     padding: 0;
+        margin: auto;
 }
 
 
