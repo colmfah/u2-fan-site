@@ -170,18 +170,28 @@ def logout():
 @ app.route("/add_song", methods=["GET", "POST"])
 def add_song():
     if request.method == "POST":
-        song = {
-            "title": request.form.get("title"),
-            "year": request.form.get("year"),
-            "description": request.form.get("description"),
-            "onBestOfAlbum": False,
-            "created_by": session["user"],
-            "upVotes": 0,
-            "downVotes": 0
-        }
-        mongo.db.songs.insert_one(song)
-        flash("Song Successfully Added")
-        return redirect(url_for("get_songs"))
+        all_songs = list(mongo.db.songs.find())
+        all_song_titles = list(map(lambda song: song["title"], all_songs))
+        new_song_title = request.form.get("title")
+        print("all_song_titles ", all_song_titles)
+        print("new_song_title", new_song_title)
+        print("new_song_title in all_song_titles",
+              new_song_title in all_song_titles)
+        if new_song_title in all_song_titles:
+            flash("Song Has Already Been Added")
+        else:
+            song = {
+                "title": new_song_title,
+                "year": request.form.get("year"),
+                "description": request.form.get("description"),
+                "onBestOfAlbum": False,
+                "created_by": session["user"],
+                "upVotes": 0,
+                "downVotes": 0
+            }
+            mongo.db.songs.insert_one(song)
+            flash("Song Successfully Added")
+            return redirect(url_for("get_contenders"))
 
     return render_template("add_song.html")
 
