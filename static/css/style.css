@@ -48,18 +48,14 @@ html{
     margin: 0;
     
 }
-body{
-    padding: 0;
-    margin: 0;
 
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
 }
-
-
-/* 
-.page-wrapper{
-    background-color: rgba(0,0,0,0.87) !important;
-    height: 100vh;
-} */
 
 
 

@@ -8,11 +8,20 @@ Create a website that lists U2's best songs, allows fans to rate the songs and a
 User Stories
 ======
 
-As **a user**, I want to **view the most popular U2 songs** and **rate them with a score**.
+As **a visiting user**, I want to **view U2 songs** and **view their average rating**.
 
-As **a user**, I want to **propose new songs to add to the list**.
+As **a visiting user**, I want to **register to use all features on the site**.
 
-As **a user**, I want to **review the proposals of other users** and **vote in favour or against them**.
+As **a registered user**, I want to **log in to the site to be able to access all features**.
+
+As **a registered user**, I want to **view U2 songs** and **review them and rate them with a score**.
+
+As **a registered user**, I want to **view U2 songs** and **edit my previous reviews**.
+
+As **a registered user**, I want to **view U2 songs** and **delete my previous reviews**.
+
+As **a registered user**, I want to **propose new songs to include on the site**.
+
 
 
 Features
@@ -20,39 +29,49 @@ Features
 
 #### Home Page:
 
-The home page will contain a header, footer, an image of U2 and an explanation of the site.
-
-The image that appears will be one of a number that is saved on the database and selected randomly.
+The home page will contain a nav an image of U2 and an explanation of the site.
 
 
 #### Best Songs Page:
 
-This page will contain a header and footer and a card for each song.
+This page will contain a nav and an accordion containing the name of each "best song", its year, a "review" button and its average rate. When the user clicks on the review button or rating, it will link to the review for that song. When the user clicks anywhere else, the accordion will expand and more details about the song will be provided.
 
-Initally it will include every song from U2's two best of albums.
+In order to be listed as a "best song", the song must:
 
-The card for each song will display an image, some summary information about the song, the average rating that users have given the song and the rating (if any) that the logged in user has given the song.
+* Have an average rating of at least 3 if it has at least 10 reviews
+* If it has less than 10 reviews, it must be a song that was is listed on U2's official best of albums
 
+When a song has at least 10 reviews, and its average rating is less than 2, it will automatically be deleted from the database.
+
+
+#### Contenders:
+
+This page will contain a nav and an accordion containing the name of each "contender song", its year, a "review" button and its average rate. When the user clicks on the review button or rating, it will link to the review for that song. When the user clicks anywhere else, the accordion will expand and more details about the song will be provided.
+
+In order to be listed as a "contender song", the song must:
+
+* Have an average rating of between 2 and 3 if it has at least 10 reviews
+* If it has less than 10 reviews, it must not be a song that was is listed on U2's official best of albums
+
+When a song has at least 10 reviews, and its average rating is less than 2, it will automatically be deleted from the database.
+
+When a song has at least 10 reviews, and its average rating is at least 3, it will automatically be removed from the contender list and listed on the best songs list
+
+#### Review Page:
+
+This page displays all reviews the song has received and allows logged in users to review the song or edit or delete their previous review.
 
 #### Potential Best Songs:
 
-This page will contain a header and footer, a paragraph with instructions, a button to propose a new song and a card for each song that has already been proposed by users.
-
-Each card will contain an image, some summary information and a option for users to vote in favour or against adding the song to the list of best songs.
-
-When the number of votes in favour of a song is greater than the number of votes against the song by ten votes, that song will be removed from this page and will be found in the best songs page.
-
-#### Potential Best Songs:
-
-This page will contain a header and footer, a form for new songs to propose and a button to submit the form.
+This page will contain a nav bar, a form for new songs to propose and a button to submit the form.
 
 It will display an error if the song has already been submitted.
 
-If the song is successfully added, it will then be displayed in the potential best songs page and the user will be redirected.
+If the song is successfully added, it will then be displayed in the contenders page and the user will be redirected.
 
 #### Sign Up Page:
 
-This page will contain a header and footer and a form to provide email address and password.
+This page will contain a nav bar and a form to provide email address and password.
 
 It will also provide a link to the log in page for users that have already registered.
 
@@ -65,7 +84,7 @@ Otherwise it will create a new user, log them in and redirect to the best songs 
 
 #### Log In Page:
 
-This page will contain a header and footer and a form to provide email address and password.
+This page will contain a nav bar and a form to provide email address and password.
 
 It will also provide a link to the sign up page for users that have not yet registered.
 
@@ -76,27 +95,20 @@ If it is not, it will display an error.
 Otherwise it will log the user in and redirect to the best songs page.
 
 
-#### Header:
+#### Nav Bar:
 
-In the header, I will include a nav bar that has links to the home page, best songs page, potential best songs page, log in or sign up page, search option and a sort option. This will be on every page.
-
-#### Footer:
-
-In the footer, I will include links to the U2 page on social media platforms. These will open in a new window. This will be on every page.
-
-
-#### Product Limitations:
-
-
-
-#### Future Features:
-
+I will include a nav bar that has links to the home page, best songs page, potential best songs page, log in or sign up page. This will be on every page.
 
 
 
 Typography and Color Scheme:
 ======
 
+Red: #fe0000
+
+Black: rgba(0,0,0,0.87)
+
+Fonts: Nunito Google Fonts
 
 
 
@@ -113,29 +125,81 @@ Technology:
 HTML5
 CSS3
 Gitpod
-
-
-Best Practices:
-======
-
+Flask
+Jinja
 
 
 Testing:
 ======
 
+Validated CSS using https://jigsaw.w3.org/css-validator.
+
+Validated HTML using https://validator.w3.org/.
+
+
+
 
 
 #### Test cases:
 
+As **a visiting user**, I want to **view the most popular U2 songs** and **view their average rating**.
+
+When logged out, I visit the website. 
+When I click the "best songs" page and the "contenders" page, I can view a list of U2 songs and see their average ratings to one decimal place.
+
+As **a visiting user**, I want to **register to use all features on the site**.
+
+When logged out, I visit the website. 
+When I click "register", I am brought to the registration page. 
+If I enter a username that already exists in the database it displays an error.
+If I enter a username or password that is not between 5 and 15 characters and only contains letters and numbers, it displays an error.
+If all these conditions are fulfilled, it creates a new account.
+
+As **a registered user**, I want to **log in to the site to be able to access all features**.
+
+When logged out, I visit the website. 
+When I click "log in", I am brought to the log-in page. 
+If I don't enter one of the fields, an error displays.
+If I enter a username or password that does not match those stored in the database, an error displays.
+
+
+As **a registered user**, I want to **view U2 songs** and **review them and rate them with a score**.
+
+When logged into the website I click on "best songs" or "contenders" and I am brought to those pages.
+I click "review" on the song that I wish to review.
+I am brought to the review page.
+If I do not enter a rating or a sufficiently long review, an error message is displayed.
+When I enter a rating and a sufficiently long review, a flash message displays to tell me that my review has been saved.
+I can see my review on screen and I have the option to edit or delete it.
+
+As **a registered user**, I want to **view U2 songs** and **edit my previous reviews**.
+
+When logged into the website I click on "best songs" or "contenders" and I am brought to those pages.
+I click "review" on a song that I have already reviewed.
+I am brought to the review page for that song.
+I can change the rating and/or the review.
+When I click "update review", a flash message displays to tell me that my review has been saved.
+I can see my review on screen and I have the option to edit it again or delete it.
+
+As **a registered user**, I want to **view U2 songs** and **delete my previous reviews**.
+
+When logged into the website I click on "best songs" or "contenders" and I am brought to those pages.
+I click "review" on a song that I have already reviewed.
+I am brought to the review page for that song.
+When I click "delete review", a flash message displays to tell me that my review has been deleted.
+I am redirected to the best songs.
+
+As **a registered user**, I want to **propose new songs to include on the site**.
+
+When logged into the website I click "propose new songs" and I am brought to that page.
 
 
 
 
-#### Fixed Issues:
 
 
 
-#### Open Issues:
+
 
 
 
@@ -170,6 +234,7 @@ https://stackoverflow.com/questions/7774814/remove-white-space-below-image
 
 https://www.ginifab.com/feeds/pms/color_picker_from_image.php
 
+http://stackoverflow.com/questions/10361460/how-can-i-change-or-remove-html5-form-validation-default-error-messages
 
 
 
