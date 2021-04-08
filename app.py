@@ -173,10 +173,6 @@ def add_song():
         all_songs = list(mongo.db.songs.find())
         all_song_titles = list(map(lambda song: song["title"], all_songs))
         new_song_title = request.form.get("title")
-        print("all_song_titles ", all_song_titles)
-        print("new_song_title", new_song_title)
-        print("new_song_title in all_song_titles",
-              new_song_title in all_song_titles)
         if new_song_title in all_song_titles:
             flash("Song Has Already Been Added")
         else:
