@@ -183,6 +183,7 @@ color: #fff;
 .song-title{
     font-size: clamp(15px, 5vw, 30px);
     color: black !important; 
+    margin-top: 85px;
     
 }
 
