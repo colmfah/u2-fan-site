@@ -190,6 +190,7 @@ def get_reviews(song_id):
     user_review = False
     user_review_exists = False
     user_logged_in = False
+
     if "user" in session:
         user_logged_in = True
         userID = mongo.db.users.find_one(
@@ -200,7 +201,7 @@ def get_reviews(song_id):
         user_review = reviews[users_who_reviewed.index(
             session["user"])]
 
-    if request.method == "POST":
+    if "user" in session and request.method == "POST":
 
         user_rating = round(float(request.form.get("rating")), 1)
 
