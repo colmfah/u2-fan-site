@@ -65,33 +65,8 @@ def calculate_ratings(song):
     return song
 
 
-def get_reviews(song_id):
-    song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
-    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-    users_who_reviewed = list(
-        map(lambda review: review["user"], reviews))
-    user_review = False
-    user_review_exists = False
-    user_logged_in = False
-    if "user" in session:
-        user_logged_in = True
-        userID = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        user_review_exists = userID in users_who_reviewed
-    if user_review_exists:
-        user_review = reviews[users_who_reviewed.index(
-            session["user"])]
-    return render_template("get_reviews.html",
-                           song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
-
-
-def get_songs():
-    all_songs = list(mongo.db.songs.find())
-    best_songs = filter(get_best_songs, all_songs)
-    best_songs_with_ratings = list(map(calculate_ratings, best_songs))
-    best_songs_with_ratings.sort(reverse=True,
-                                 key=lambda song: song["rating"])
-    return render_template("songs.html", songs=best_songs_with_ratings)
+def update_review():
+    print("in update review DUNCTION")
 
 
 @ app.route("/")
@@ -210,10 +185,8 @@ def get_reviews(song_id):
 
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-
     users_who_reviewed = list(
         map(lambda review: review["user"], reviews))
-
     user_review = False
     user_review_exists = False
     user_logged_in = False
@@ -221,80 +194,56 @@ def get_reviews(song_id):
         user_logged_in = True
         userID = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
-
         user_review_exists = userID in users_who_reviewed
 
     if user_review_exists:
         user_review = reviews[users_who_reviewed.index(
             session["user"])]
 
-    return render_template("get_reviews.html",
-                           song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
+    if request.method == "POST":
 
+        user_rating = round(float(request.form.get("rating")), 1)
 
-@ app.route("/edit_review/<song_id>", methods=["POST"])
-def edit_review(song_id):
+        review = {
+            "user": session["user"],
+            "rating": user_rating,
+            "review": request.form.get("review"),
+            "song": ObjectId(song_id)
+        }
 
-    user_rating = round(float(request.form.get("rating")), 1)
+        reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
+        ratings = list(map(lambda x: x["rating"], reviews))
+        ratings.append(user_rating)
+        average_rating = statistics.mean(ratings)
 
-    review = {
-        "user": session["user"],
-        "rating": user_rating,
-        "review": request.form.get("review"),
-        "song": ObjectId(song_id)
-    }
+        if average_rating < 3 and len(ratings) >= 10:
+            mongo.db.songs.remove({"_id": ObjectId(song_id)})
+            flash("Song Deleted Because of Poor Reviews")
+            all_songs = list(mongo.db.songs.find())
+            best_songs = filter(get_best_songs, all_songs)
+            best_songs_with_ratings = list(map(calculate_ratings, best_songs))
+            best_songs_with_ratings.sort(reverse=True,
+                                         key=lambda song: song["rating"])
+            return render_template("songs.html", songs=best_songs_with_ratings)
 
-    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-    ratings = list(map(lambda x: x["rating"], reviews))
-    ratings.append(user_rating)
-    average_rating = statistics.mean(ratings)
-
-    if average_rating < 3 and len(ratings) >= 10:
-        mongo.db.songs.remove({"_id": ObjectId(song_id)})
-        flash("Song Deleted Because of Poor Reviews")
-        all_songs = list(mongo.db.songs.find())
-        best_songs = filter(get_best_songs, all_songs)
-        best_songs_with_ratings = list(map(calculate_ratings, best_songs))
-        best_songs_with_ratings.sort(reverse=True,
-                                     key=lambda song: song["rating"])
-        return render_template("songs.html", songs=best_songs_with_ratings)
-
-    else:
-        users_who_reviewed = list(
-            map(lambda review: review["user"], reviews))
-        userID = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        user_review_exists = userID in users_who_reviewed
-
-        if user_review_exists:
+        elif user_review_exists:
             relevant_review = list(
                 filter(lambda review: review["user"] == session["user"], reviews))
             reviewID = relevant_review[0]["_id"]
             mongo.db.reviews.update({"_id": ObjectId(reviewID)}, review)
+            flash("Review Saved")
+            reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
+            return render_template("get_reviews.html",
+                                   song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=review, user_logged_in=user_logged_in)
+
         else:
             mongo.db.reviews.insert_one(review)
+            flash("Review Saved")
+            reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
+            return render_template("get_reviews.html",
+                                   song=song, reviews=reviews, user_review_exists=True, user_review=review, user_logged_in=user_logged_in)
 
-        flash("Review Saved")
-
-        song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
-        reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-
-        users_who_reviewed = list(
-            map(lambda review: review["user"], reviews))
-
-        user_review = False
-        user_review_exists = False
-        user_logged_in = False
-        if "user" in session:
-            user_logged_in = True
-            userID = mongo.db.users.find_one(
-                {"username": session["user"]})["username"]
-
-            user_review_exists = userID in users_who_reviewed
-
-        if user_review_exists:
-            user_review = reviews[users_who_reviewed.index(
-                session["user"])]
+    else:
         return render_template("get_reviews.html",
                                song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 

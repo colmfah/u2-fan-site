@@ -16,7 +16,7 @@
 
 {% if user_review_exists %}
 <div class="row card-panel grey lighten-5 write-review">
-    <form class="col s12 flex-form" method="POST" action="{{ url_for('edit_review', song_id=song._id) }}">
+    <form class="col s12 flex-form" method="POST" action="{{ url_for('get_reviews', song_id=song._id) }}">
         <h5 class="center-align">edit your review</h5>
         <div class="fieldset-wrapper">
             <fieldset class="rating" required>
@@ -87,7 +87,7 @@
 
     <h5 class="center-align">post a review</h5>
 
-    <form class="col s12" method="POST" action="{{ url_for('edit_review', song_id=song._id) }}">
+    <form class="col s12" method="POST" action="{{ url_for('get_reviews', song_id=song._id) }}">
 
         <!-- code based on https://codepen.io/jamesbarnett/pen/vlpkh -->
         <div class="fieldset-wrapper">
