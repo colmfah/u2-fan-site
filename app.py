@@ -264,7 +264,14 @@ def delete_review(user_review_id):
 
 @app.errorhandler(werkzeug.exceptions.BadRequest)
 def handle_bad_request(e):
-    return 'bad request!', 400
+    flash("An error occurred: Bad Request")
+    return redirect(url_for("get_songs"))
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    flash("An error occurred: 500")
+    return redirect(url_for("get_songs"))
 
 
 if __name__ == "__main__":
