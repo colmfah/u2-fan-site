@@ -251,9 +251,20 @@ def get_reviews(song_id):
 
 @ app.route("/delete_review/<user_review_id>")
 def delete_review(user_review_id):
-    mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
-    flash("Review Deleted")
-    return redirect(url_for("get_songs"))
+    review = mongo.db.reviews.find_one({"_id": ObjectId(user_review_id)})
+    if "user" not in session:
+        return render_template("login.html")
+    elif review["user"] != session["user"]:
+        flash("This is not your review!")
+    else:
+        mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
+        flash("Review Deleted")
+        return redirect(url_for("get_songs"))
+
+
+@app.errorhandler(werkzeug.exceptions.BadRequest)
+def handle_bad_request(e):
+    return 'bad request!', 400
 
 
 if __name__ == "__main__":
