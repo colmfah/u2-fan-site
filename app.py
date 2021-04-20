@@ -20,10 +20,26 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+"""Create function to round numbers if they are not whole numbers
+    Args:
+        num:  a number
+    Returns:
+        number
+"""
+
+
 def float_trunc(num):
     if round(num, 1) > int(num):
         return round(num, 1)
     return int(num)
+
+
+"""Create function to determine whether a song is a "best song"
+    Args:
+        song:  song dictionary from database
+    Returns:
+        Boolean
+"""
 
 
 def get_best_songs(song):
@@ -37,6 +53,14 @@ def get_best_songs(song):
             return True
         else:
             return False
+
+
+"""Create function to determine whether a song is a "contender song"
+    Args:
+        song:  song dictionary from database
+    Returns:
+        Boolean
+"""
 
 
 def get_contender_songs(song):
@@ -54,6 +78,14 @@ def get_contender_songs(song):
         return True
 
 
+"""Create function to calculate a song's ratings
+    Args:
+        song:  song dictionary from database
+    Returns:
+        the song dictionary with rating included
+"""
+
+
 def calculate_ratings(song):
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song["_id"])}))
     if len(reviews) == 0:
@@ -65,14 +97,22 @@ def calculate_ratings(song):
     return song
 
 
-def update_review():
-    print("in update review DUNCTION")
+"""Create app route to get the home page
+    Returns:
+        Renders the index template
+"""
 
 
 @ app.route("/")
-@ app.route("/home")
-def home():
-    return render_template("home.html")
+@ app.route("/index")
+def index():
+    return render_template("index.html")
+
+
+"""Create app route to get the best songs
+    Returns:
+        Renders the songs template
+"""
 
 
 @ app.route("/get_songs")
@@ -85,6 +125,12 @@ def get_songs():
     return render_template("songs.html", songs=best_songs_with_ratings)
 
 
+"""Create app route to get the contender songs
+    Returns:
+        Renders the contender template
+"""
+
+
 @ app.route("/get_contenders")
 def get_contenders():
     all_songs = list(mongo.db.songs.find())
@@ -92,6 +138,13 @@ def get_contenders():
     contenders_with_ratings = map(calculate_ratings, contenders)
 
     return render_template("contenders.html", songs=contenders_with_ratings)
+
+
+"""Create app route to register new user
+    Returns:
+        Get method renders render_template
+        Post method renders index template
+"""
 
 
 @ app.route("/register", methods=["GET", "POST"])
@@ -114,9 +167,15 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
-        return redirect(url_for("home"))
+        return redirect(url_for("index"))
 
     return render_template("register.html")
+
+
+"""Create app route to log a user in
+    Returns:
+        Renders the get_reviews template
+"""
 
 
 @ app.route("/login", methods=["GET", "POST"])
@@ -132,7 +191,7 @@ def login():
                 flash("Welcome, {}".format(
                     request.form.get("username")))
                 return redirect(url_for(
-                    "home"))
+                    "index"))
             else:
                 flash("Incorrect Username and/or Password")
                 return redirect(url_for("login"))
@@ -143,12 +202,24 @@ def login():
     return render_template("login.html")
 
 
+"""Create app route to log a user out
+    Returns:
+        Renders the login template
+"""
+
+
 @ app.route("/logout")
 def logout():
-    # remove user from session cookies
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+"""Create app route to post new song to database
+    Returns:
+        Renders the add_song template for get request
+        Renders the get_contenders template after successful post request
+"""
 
 
 @ app.route("/add_song", methods=["GET", "POST"])
@@ -178,6 +249,14 @@ def add_song():
                 return redirect(url_for("get_contenders"))
 
         return render_template("add_song.html")
+
+
+"""Create app route to get reviews associated with a song
+    Args:
+        song_id:  id of the song
+    Returns:
+        Renders the get_reviews template
+"""
 
 
 @ app.route("/get_reviews/<song_id>", methods=["GET", "POST"])
@@ -249,6 +328,16 @@ def get_reviews(song_id):
                                song=song, reviews=reviews, user_review_exists=user_review_exists, user_review=user_review, user_logged_in=user_logged_in)
 
 
+"""Create app route to delete user review
+    Args:
+        user_review_id:  id of the user review
+    Returns:
+        Renders the login template if user is not logged in
+        Displays flash message if this is not the users' review
+        Renders the get_songs template if review is successfully deleted
+"""
+
+
 @ app.route("/delete_review/<user_review_id>")
 def delete_review(user_review_id):
     review = mongo.db.reviews.find_one({"_id": ObjectId(user_review_id)})
@@ -262,15 +351,17 @@ def delete_review(user_review_id):
         return redirect(url_for("get_songs"))
 
 
-@app.errorhandler(werkzeug.exceptions.BadRequest)
-def handle_bad_request(e):
-    flash("An error occurred: Bad Request")
-    return redirect(url_for("get_songs"))
+"""Create app route to handle errors
+    Args:
+        Exception:  error
+    Returns:
+        Renders the get_songs template
+"""
 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    flash("An error occurred: 500")
+    # flash("An error occurred: 500")
     return redirect(url_for("get_songs"))
 
 
