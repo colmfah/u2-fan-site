@@ -115,10 +115,6 @@ def update_existing_review(song_id, song, review):
     mongo.db.reviews.update({"_id": ObjectId(review_id)}, review)
     flash("Review Saved")
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-    return render_template("get_reviews.html",
-                           song=song, reviews=reviews,
-                           user_review_exists=True,
-                           user_review=review, user_logged_in="user" in session)
 
 
 def insert_new_review(song_id, song, review):
@@ -327,13 +323,29 @@ def get_reviews(song_id):
         average_rating = statistics.mean(ratings)
 
         if average_rating < 3 and len(ratings) >= 10:
-            delete_unpopular_song(song_id)
+            # delete_unpopular_song(song_id)
+            mongo.db.songs.remove({"_id": ObjectId(song_id)})
+            flash("Song Deleted Because of Poor Reviews")
+            all_songs = list(mongo.db.songs.find())
+            best_songs = filter(get_best_songs, all_songs)
+            best_songs_with_ratings = list(map(calculate_ratings, best_songs))
+            best_songs_with_ratings.sort(reverse=True,
+                                         key=lambda song: song["rating"])
+            return render_template("songs.html", songs=best_songs_with_ratings)
 
-        elif user_review_exists:
+        if user_review_exists:
             update_existing_review(song_id, song, review)
+            return render_template("get_reviews.html",
+                                   song=song, reviews=reviews,
+                                   user_review_exists=True,
+                                   user_review=review, user_logged_in="user" in session)
 
         else:
             insert_new_review(song_id, song, review)
+            return render_template("get_reviews.html",
+                                   song=song, reviews=reviews,
+                                   user_review_exists=True,
+                                   user_review=review, user_logged_in="user" in session)
 
     else:
         return render_template("get_reviews.html", song=song, reviews=reviews,
@@ -363,7 +375,7 @@ def delete_review(user_review_id):
 
 
 @app.errorhandler(Exception)
-def handle_exception():
+def handle_exception(exception):
     """Create app route to handle errors
     Args:
         Exception:  error
