@@ -49,7 +49,7 @@ def get_best_songs(song):
     elif len(reviews) >= 10:
         ratings = map(lambda x: x["rating"], reviews)
         average_rating = statistics.mean(ratings)
-        if average_rating >= 3:
+        if average_rating >= 4:
             return True
         else:
             return False
@@ -70,7 +70,7 @@ def get_contender_songs(song):
     elif len(reviews) >= 10:
         ratings = map(lambda x: x["rating"], reviews)
         average_rating = statistics.mean(ratings)
-        if average_rating >= 3:
+        if average_rating >= 4:
             return False
         else:
             return True
@@ -291,9 +291,20 @@ def get_reviews(song_id):
             "song": ObjectId(song_id)
         }
 
-        reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
         ratings = list(map(lambda x: x["rating"], reviews))
-        ratings.append(user_rating)
+        if user_review_exists:
+            # replace existing review with new one
+            index = 'a'
+            for user_review in reviews:
+                if user_review["user"] == session["user"]:
+                    index = reviews.index(user_review)
+                    break
+            reviews[index] = review
+            ratings = list(map(lambda x: x["rating"], reviews))
+
+        else:
+            ratings.append(user_rating)
+
         average_rating = statistics.mean(ratings)
 
         if average_rating < 3 and len(ratings) >= 10:
@@ -307,8 +318,10 @@ def get_reviews(song_id):
             return render_template("songs.html", songs=best_songs_with_ratings)
 
         elif user_review_exists:
+            reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
             relevant_review = list(
                 filter(lambda review: review["user"] == session["user"], reviews))
+            print("relevant_review", relevant_review)
             reviewID = relevant_review[0]["_id"]
             mongo.db.reviews.update({"_id": ObjectId(reviewID)}, review)
             flash("Review Saved")
@@ -359,10 +372,10 @@ def delete_review(user_review_id):
 """
 
 
-@app.errorhandler(Exception)
-def handle_exception(e):
-    # flash("An error occurred: 500")
-    return redirect(url_for("get_songs"))
+# @app.errorhandler(Exception)
+# def handle_exception(e):
+#     # flash("An error occurred: 500")
+#     return redirect(url_for("get_songs"))
 
 
 if __name__ == "__main__":
