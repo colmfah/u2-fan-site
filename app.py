@@ -112,7 +112,7 @@ def update_existing_review(song_id, song, review):
     relevant_review = list(
         filter(lambda review: review["user"] == session["user"], reviews))
     review_id = relevant_review[0]["_id"]
-    mongo.db.reviews.update({"_id": ObjectId(review_id)}, review)
+    mongo.db.reviews.update_one({"_id": ObjectId(review_id)}, review)
     flash("Review Saved")
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
 
