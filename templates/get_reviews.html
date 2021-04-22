@@ -1,24 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-
 <script>
     let userRating = {{ user_review.rating| safe }}
     window.addEventListener('load', (event) => {
         loaded(userRating)
     });
 </script>
-
 <h3 class="center-align song-title">{{ song.title  }} Reviews</h3>
-
-
-
-
-
 {% if user_review_exists %}
 <div class="row card-panel grey lighten-5 write-review">
     <form class="col s12 flex-form" method="POST" action="{{ url_for('get_reviews', song_id=song._id) }}">
         <h5 class="center-align">edit your review</h5>
         <div class="fieldset-wrapper">
+            <!-- code based on https://codepen.io/jamesbarnett/pen/vlpkh -->
             <fieldset class="rating" required>
                 <input type="radio" id="star5" name="rating" value="5" /><label class="full starSystem" for="star5"
                     title="Awesome - 5 stars" onclick="changeRating(5)"></label>
@@ -42,7 +36,6 @@
                     title="Sucks big time - 0.5 stars" onclick="changeRating(0.5)"></label>
             </fieldset>
         </div>
-
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix light-blue-text text-darken-4">border_color</i>
@@ -51,7 +44,6 @@
                 {{- user_review.review -}}
                 </textarea>
                 <label for="review">What do you think of this song?</label>
-
             </div>
         </div>
         <!-- Submit Button -->
@@ -61,11 +53,8 @@
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-
         </div>
-
         <!-- Delete Button -->
-
         <div class="row">
             <div class="col s12 center-align">
                 <a href="{{ url_for('delete_review', user_review_id=user_review._id, song_id=song._id) }}"
@@ -73,22 +62,13 @@
                     Review<i class="material-icons right">delete</i>
                 </a>
             </div>
-
         </div>
-
-
     </form>
 </div>
-
-
 {% elif user_logged_in %}
-
 <div class="row card-panel grey lighten-5 write-review">
-
     <h5 class="center-align">post a review</h5>
-
     <form class="col s12" method="POST" action="{{ url_for('get_reviews', song_id=song._id) }}">
-
         <!-- code based on https://codepen.io/jamesbarnett/pen/vlpkh -->
         <div class="fieldset-wrapper">
             <fieldset class="rating">
@@ -114,8 +94,6 @@
                     title="Sucks big time - 0.5 stars" onclick="changeRating(0.5)"></label>
             </fieldset>
         </div>
-
-
         <!-- Written Review -->
         <div class="warning col s12">Minimum Rating Allowed is 0.5</div>
         <div class="row">
@@ -126,11 +104,9 @@
                 <label for="review">What do you think of this song?</label>
             </div>
         </div>
-
         <!-- Submit Button -->
         <div class="row">
             <div class="col s12 center-align">
-
                 <button class="btn waves-effect waves-light center-align" type="submit"
                     onclick="submitReview(event)">Submit
                     <i class="material-icons right">send</i>
@@ -138,34 +114,17 @@
             </div>
         </div>
     </form>
-
 </div>
-
 {% endif %}
-
 <div class="reviews-wrapper">
-
     {% for review in reviews %}
-
     <div class="row card-panel grey lighten-5 review">
-
-
         <div class="review-stars">{{ review.rating }}</div>
         <br />
         <div><em>"{{ review.review }}"</em></div>
         <br />
         <div><strong>{{ review.user }}</strong></div>
-
     </div>
-
     {% endfor %}
-
 </div>
-
-
-
-
-
-
-
 {% endblock %}

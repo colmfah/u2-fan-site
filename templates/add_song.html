@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-
 <h3 class="light-blue-text text-darken4 center-align song-title">Add Song</h3>
-
 <div class="row card-panel grey lighten-5 write-review">
     <form class="col s12" method="POST" action="{{ url_for('add_song') }}">
-
         <!-- Song Name -->
         <div class="row">
             <div class="input-field col s12">
@@ -14,7 +11,6 @@
                 <label for="title">Song Name</label>
             </div>
         </div>
-
         <!-- Song Year -->
         <div class="row">
             <div class="input-field col s12">
@@ -23,8 +19,6 @@
                 <label for="year">Song Year</label>
             </div>
         </div>
-
-
         <!-- Song Description -->
         <div class="row">
             <div class="input-field col s12">
@@ -34,7 +28,6 @@
                 <label for="description">Tell us about this song</label>
             </div>
         </div>
-
         <!-- Submit Button -->
         <div class="row">
             <div class="col s12 center-align">
@@ -43,12 +36,6 @@
                 </button>
             </div>
         </div>
-
-
-
-
     </form>
 </div>
-
-
 {% endblock %}

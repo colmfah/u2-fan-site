@@ -11,12 +11,9 @@ if os.path.exists("env.py"):
     import env
 
 app = Flask(__name__)
-
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
-
 mongo = PyMongo(app)
 
 
@@ -81,23 +78,6 @@ def calculate_ratings(song):
         average_rating = statistics.mean(ratings)
         song["rating"] = float_trunc(average_rating)
     return song
-
-
-def delete_unpopular_song(song_id):
-    """deletes song
-    Args:
-        song_id:  id of song in database
-    Returns:
-        Renders the songs template
-    """
-    mongo.db.songs.remove({"_id": ObjectId(song_id)})
-    flash("Song Deleted Because of Poor Reviews")
-    all_songs = list(mongo.db.songs.find())
-    best_songs = filter(get_best_songs, all_songs)
-    best_songs_with_ratings = list(map(calculate_ratings, best_songs))
-    best_songs_with_ratings.sort(reverse=True,
-                                 key=lambda song: song["rating"])
-    return render_template("songs.html", songs=best_songs_with_ratings)
 
 
 def update_existing_review(song_id, review):
@@ -165,7 +145,6 @@ def get_contenders():
     all_songs = list(mongo.db.songs.find())
     contenders = filter(get_contender_songs, all_songs)
     contenders_with_ratings = map(calculate_ratings, contenders)
-
     return render_template("contenders.html", songs=contenders_with_ratings)
 
 
@@ -180,22 +159,17 @@ def register():
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()}
         )
-
         if existing_user:
             flash("Username already exists")
             return redirect(url_for("register"))
-
         register_user = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
-
         mongo.db.users.insert_one(register_user)
-
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
         return redirect(url_for("index"))
-
     return render_template("register.html")
 
 
@@ -208,7 +182,6 @@ def login():
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
-
         if existing_user:
             if check_password_hash(
                     existing_user["password"], request.form.get("password")):
@@ -221,7 +194,6 @@ def login():
             return redirect(url_for("login"))
         flash("Incorrect Username and/or Password")
         return redirect(url_for("login"))
-
     return render_template("login.html")
 
 
@@ -245,7 +217,6 @@ def add_song():
     """
     if "user" not in session:
         return render_template("login.html")
-
     if request.method == "POST":
         all_songs = list(mongo.db.songs.find())
         all_song_titles = list(map(lambda song: song["title"], all_songs))
@@ -265,7 +236,6 @@ def add_song():
             mongo.db.songs.insert_one(song)
             flash("Song Successfully Added")
             return redirect(url_for("get_contenders"))
-
     return render_template("add_song.html")
 
 
@@ -277,37 +247,29 @@ def get_reviews(song_id):
     Returns:
         Renders the get_reviews template
     """
-
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
     users_who_reviewed = list(
         map(lambda review: review["user"], reviews))
     user_review = False
     user_review_exists = False
-
     if "user" in session:
         user_id = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
         user_review_exists = user_id in users_who_reviewed
-
     if user_review_exists:
         user_review = reviews[users_who_reviewed.index(
             session["user"])]
-
     if "user" in session and request.method == "POST":
-
         user_rating = round(float(request.form.get("rating")), 1)
-
         review = {
             "user": session["user"],
             "rating": user_rating,
             "review": request.form.get("review"),
             "song": ObjectId(song_id)
         }
-
         ratings = list(map(lambda x: x["rating"], reviews))
         if user_review_exists:
-            # replace existing review with new one
             review_index = 'a'
             for user_review in reviews:
                 if user_review["user"] == session["user"]:
@@ -315,14 +277,10 @@ def get_reviews(song_id):
                     break
             reviews[review_index] = review
             ratings = list(map(lambda x: x["rating"], reviews))
-
         else:
             ratings.append(user_rating)
-
         average_rating = statistics.mean(ratings)
-
         if average_rating < 3 and len(ratings) >= 10:
-            # delete_unpopular_song(song_id)
             mongo.db.songs.remove({"_id": ObjectId(song_id)})
             flash("Song Deleted Because of Poor Reviews")
             all_songs = list(mongo.db.songs.find())
@@ -331,20 +289,17 @@ def get_reviews(song_id):
             best_songs_with_ratings.sort(reverse=True,
                                          key=lambda song: song["rating"])
             return render_template("songs.html", songs=best_songs_with_ratings)
-
         if user_review_exists:
             update_existing_review(song_id, review)
             return render_template("get_reviews.html",
                                    song=song, reviews=reviews,
                                    user_review_exists=True,
                                    user_review=review, user_logged_in="user" in session)
-
         insert_new_review(song_id, song, review)
         return render_template("get_reviews.html",
                                song=song, reviews=reviews,
                                user_review_exists=True,
                                user_review=review, user_logged_in="user" in session)
-
     return render_template("get_reviews.html", song=song, reviews=reviews,
                            user_review_exists=user_review_exists, user_review=user_review,
                            user_logged_in="user" in session)
