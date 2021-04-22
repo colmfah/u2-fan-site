@@ -12,7 +12,7 @@ As **a visiting user**, I want to **view U2 songs** and **view their average rat
 
 As **a visiting user**, I want to **register to use all features on the site**.
 
-As **a registered user**, I want to **log in to the site to be able to access all features**.
+As **a registered user**, I want to **log in to the site**.
 
 As **a registered user**, I want to **view U2 songs** and **review them and rate them with a score**.
 
@@ -21,7 +21,6 @@ As **a registered user**, I want to **view U2 songs** and **edit my previous rev
 As **a registered user**, I want to **view U2 songs** and **delete my previous reviews**.
 
 As **a registered user**, I want to **propose new songs to include on the site**.
-
 
 
 Features
@@ -100,7 +99,6 @@ Otherwise it will log the user in and redirect to the best songs page.
 I will include a nav bar that has links to the home page, best songs page, potential best songs page, log in or sign up page. This will be on every page.
 
 
-
 Typography and Color Scheme:
 ======
 
@@ -111,12 +109,10 @@ Black: rgba(0,0,0,0.87)
 Fonts: Nunito Google Fonts
 
 
-
 Skeleton:
 ======
 
 Wireframes are available [here](/docs/wireframes.pdf)
-
 
 
 Technology:
@@ -127,6 +123,7 @@ CSS3
 Gitpod
 Flask
 Jinja
+Heroku
 
 
 Testing:
@@ -136,8 +133,13 @@ Validated CSS using https://jigsaw.w3.org/css-validator.
 
 Validated HTML using https://validator.w3.org/.
 
+Validated Python using Pylint
 
+Validated javascript using JSHint.com
 
+Tested website on chrome, firefox and safari on a desktop map and tested on chrome and firefox on an andriod mobile.
+
+Used google chrome simulator to test for responsiveness for moto g4, galaxy s5, pixel 2, pixel 2xl, iphone5/se, iphone 6/7/8, iphone 6/7/8 plus, iphone x, ipad, ipad pro, surface duo, galaxy fold and desktop.
 
 
 #### Test cases:
@@ -192,14 +194,32 @@ I am redirected to the best songs.
 As **a registered user**, I want to **propose new songs to include on the site**.
 
 When logged into the website I click "propose new songs" and I am brought to that page.
+I submit the song name, the song year and the song description and I click submit.
+If my input meets the requirements, it is saved in the database and a flash message is displayed.
+Otherwise an error message is displayed.
+
+## Test to ensure users that are not logged in cannot access features exclusive to logged in user
+
+I logged into my account. I clicked on the reviews section of a song. I copied the url. I pasted it into chrome incognito mode. I could did not have the option to edit or delete the review in chrome incognito mode.
+
+In chrome I naviated to 'propose songs' page. I copied the url. I pasted it into chrome incognito mode. I could not propose new songs. It redirected me to the login page
 
 
+## Test to ensure 404 errors redirect to best songs page
+
+I changed the end of the url to /sdkfslkdfjslj
+
+It redirected me to the best songs page.
 
 
+### Outstanding issues
 
+## Pylint errors
 
-
-
+app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app.py:309:0: R1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
+app.py:330:21: W0613: Unused argument 'exception' (unused-argument)
+app.py:11:4: W0611: Unused import env (unused-import)
 
 
 
@@ -211,7 +231,72 @@ This project was developed using Gitpod, committed to git and pushed to GitHub u
 Deployment:
 ======
 
+All of the files necessary to run this website have been stored in a GitHub repository. If you would like to work on your own version of this site or use it as a template for your own work, you have the option to either fork, or make a clone of the original repo.
 
+### Forking the GitHub Repository
+By forking the GitHub Repository you can make a copy of the original repository on your GitHub account, which enables you to view and/or make your own changes without affecting the original repository. This can be achieved using the following steps...
+
+Log in to GitHub and locate the GitHub Repository
+At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
+You should now have a copy of the original repository in your GitHub account.
+
+### Making a Local Clone
+Log in to GitHub and locate the GitHub Repository
+Under the repository name, click "Clone or download".
+To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+Open Git Bash
+Change the current working directory to the location where you want the cloned directory to be made.
+Type git clone, and then paste the URL you copied in Step 3.
+It is important that you create an env.py file to save your Environment Variables such as:
+IP - (0.0.0.0 Used, but not recommended for production apps)
+PORT - (5000 used)
+MONGODB URI - The URI for your MongoDB Database
+MONGODB PASSWORD - The password for your MongoDB Database The web app will not function without these variables.
+
+### Heroku app creation
+As this is a full-stack website it has been deployed to Heroku.com using the following procedure:
+
+Log in to Heroku.com
+From the Dashboard, select the "New" button on the Top-Right of the screen
+Select "Create new app"
+Insert your app name
+Heroku will let you know whether your chosen name is available
+Select the most appropriate region for your location
+Click the "Create app" button
+
+### Heroku Deployment
+The above steps will automatically bring you to the "Deploy" tab of your new app.
+
+
+In the "Deployment Method" section select Github
+Once selected a Connect to GitHub section will display below
+Ensure your profile is displayed
+If not type in your GitHub username
+Heroku + Github Repo
+Search for, and select the Repo corresponding to the Heroku app
+Click "Connect"
+This app uses configuration settings and secret keys for MongoDB and Session cookies respectively, which Heroku requires in order for the website to function as desired. To do this you need to set the Config Vars within Heroku:
+Under the "Settings" tab, in the Config Vars section select the "Reveal Config Vars" button.
+This will reveal a form for inputting the key and value pairs necessary to connect to the app.
+
+KEY	VALUE
+IP	0.0.0.0
+PORT	5000
+SECRET KEY	Randomly Generated Fort Knox Key
+MONGO_URI	Your unique MongoDB URI
+MONGO_DBNAME	Your unique Mongo DB name
+The above Mongo_URI variable can be found in the appropriate Mongo DB Project under Cluster by selecting "Connect"
+
+Select "Clusters"
+Select "Connect"
+Select "Connect your application"
+Choose your Driver and Version
+Remember to substitute in your own DBNAME and Password
+Copy your connection string
+Enabling Automatic Deployment
+Select the Heroku "Deploy" tab
+In the "Automatic deploys" section select the branch you wish to use
+There is no difference between the developed version of W3Recipes and that deployed on Heroku
 
 Credits:
 ======
@@ -235,6 +320,8 @@ https://stackoverflow.com/questions/7774814/remove-white-space-below-image
 https://www.ginifab.com/feeds/pms/color_picker_from_image.php
 
 http://stackoverflow.com/questions/10361460/how-can-i-change-or-remove-html5-form-validation-default-error-messages
+
+https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
 
 
 
