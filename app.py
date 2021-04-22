@@ -100,10 +100,9 @@ def delete_unpopular_song(song_id):
     return render_template("songs.html", songs=best_songs_with_ratings)
 
 
-def update_existing_review(song_id, song, review):
+def update_existing_review(song_id, review):
     """updates existing review
     Args:
-        song:  song dictionary from database
         review: dictionary of review data that user has submitted
     Returns:
         Renders the get_review template
@@ -334,23 +333,21 @@ def get_reviews(song_id):
             return render_template("songs.html", songs=best_songs_with_ratings)
 
         if user_review_exists:
-            update_existing_review(song_id, song, review)
+            update_existing_review(song_id, review)
             return render_template("get_reviews.html",
                                    song=song, reviews=reviews,
                                    user_review_exists=True,
                                    user_review=review, user_logged_in="user" in session)
 
-        else:
-            insert_new_review(song_id, song, review)
-            return render_template("get_reviews.html",
-                                   song=song, reviews=reviews,
-                                   user_review_exists=True,
-                                   user_review=review, user_logged_in="user" in session)
+        insert_new_review(song_id, song, review)
+        return render_template("get_reviews.html",
+                               song=song, reviews=reviews,
+                               user_review_exists=True,
+                               user_review=review, user_logged_in="user" in session)
 
-    else:
-        return render_template("get_reviews.html", song=song, reviews=reviews,
-                               user_review_exists=user_review_exists, user_review=user_review,
-                               user_logged_in="user" in session)
+    return render_template("get_reviews.html", song=song, reviews=reviews,
+                           user_review_exists=user_review_exists, user_review=user_review,
+                           user_logged_in="user" in session)
 
 
 @ app.route("/delete_review/<user_review_id>")
