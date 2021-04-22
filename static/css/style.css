@@ -2,7 +2,6 @@
 /* code based on https://codepen.io/jamesbarnett/pen/vlpkh */
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 fieldset, label { margin: 0; padding: 0; }
 h1 { font-size: 1.5em; margin: 10px; }
 
@@ -37,7 +36,6 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
 .rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
@@ -48,8 +46,6 @@ html{
     margin: 0;
 }
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -58,14 +54,13 @@ html{
 
 body{
     position: relative;
-  min-height: 100vh;
-  border: 0.1px solid rgba(0,0,0,0);
+    min-height: 100vh;
+    border: 0.1px solid rgba(0,0,0,0);
 }
 
 #content-wrap{
     padding-bottom: 50px;
 }
-
 
 nav .brand-logo{
     font-size: clamp(25px, 4vw, 40px) !important;
@@ -81,17 +76,15 @@ nav {
 
 footer{
     border-top: 1px solid #fe0000;  
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50px; 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px; 
 }
-
 
 .page-footer{
     padding: 0;
 }
-
 
 .flashes h4{
     line-height: 4;
@@ -111,10 +104,8 @@ footer{
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    
+    flex-wrap: wrap;    
     justify-content: space-between;
-   
 }
 
 .review-flex{
@@ -122,8 +113,6 @@ footer{
     display: flex;
     margin-top: 10px;
 }
-
-
 
 .rating-number{
     text-align: center
@@ -141,11 +130,10 @@ footer{
 }
 
 .song-summary{
-    position: relative;
- 
+    position: relative; 
     display:flex;
     flex-direction: column;
-  justify-content: center;
+    justify-content: center;
 }
 
 .song-title-and-year{
@@ -175,7 +163,7 @@ footer{
 }
 
 .star-and-rating{
-color: #fff;
+    color: #fff;
 }
 
 .write-review{
@@ -234,14 +222,9 @@ color: #fff;
 }
 
 img{
-    /* display: block; */
     margin:0;
     padding: 0;
-    /* margin: auto; */
 }
-
-
-
 
 @media screen and (min-width: 605px) {
   .accordion-flex {
