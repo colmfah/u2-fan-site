@@ -1,12 +1,10 @@
 # MS 3 Project
 
-Purpose of Project
-======
+# Purpose of Project
 
 Create a website that lists U2's best songs, allows fans to rate the songs and add new songs to the list.
 
-User Stories
-======
+# User Stories
 
 As **a visiting user**, I want to **view U2 songs** and **view their average rating**.
 
@@ -23,21 +21,22 @@ As **a registered user**, I want to **view U2 songs** and **delete my previous r
 As **a registered user**, I want to **propose new songs to include on the site**.
 
 
-Features
-====== 
+# Features
 
 #### Home Page:
 
+![HomePage](/assets/images/homepage-screenshot.png)
 The home page will contain a nav an image of U2 and an explanation of the site.
 
 
 #### Best Songs Page:
 
+![BestSongs](/assets/images/best-songs-screenshot.png)
 This page will contain a nav and an accordion containing the name of each "best song", its year, a "review" button and its average rate. When the user clicks on the review button or rating, it will link to the review for that song. When the user clicks anywhere else, the accordion will expand and more details about the song will be provided.
 
 In order to be listed as a "best song", the song must:
 
-* Have an average rating of at least 3 if it has at least 10 reviews
+* Have an average rating of at least 4 if it has at least 10 reviews
 * If it has less than 10 reviews, it must be a song that was is listed on U2's official best of albums
 
 When a song has at least 10 reviews, and its average rating is less than 2, it will automatically be deleted from the database.
@@ -99,8 +98,7 @@ Otherwise it will log the user in and redirect to the best songs page.
 I will include a nav bar that has links to the home page, best songs page, potential best songs page, log in or sign up page. This will be on every page.
 
 
-Typography and Color Scheme:
-======
+# Typography and Color Scheme:
 
 Red: #fe0000
 
@@ -109,14 +107,13 @@ Black: rgba(0,0,0,0.87)
 Fonts: Nunito Google Fonts
 
 
-Skeleton:
-======
+# Skeleton:
+
 
 Wireframes are available [here](/docs/wireframes.pdf)
 
 
-Technology:
-======
+# Technology:
 
 HTML5
 CSS3
@@ -142,7 +139,7 @@ Tested website on chrome, firefox and safari on a desktop map and tested on chro
 Used google chrome simulator to test for responsiveness for moto g4, galaxy s5, pixel 2, pixel 2xl, iphone5/se, iphone 6/7/8, iphone 6/7/8 plus, iphone x, ipad, ipad pro, surface duo, galaxy fold and desktop.
 
 
-#### Test cases:
+# Test cases:
 
 As **a visiting user**, I want to **view the most popular U2 songs** and **view their average rating**.
 
@@ -211,6 +208,24 @@ I changed the end of the url to /sdkfslkdfjslj
 
 It redirected me to the best songs page.
 
+## Test that songs move from "contenders" page to "best songs" page when they have at least 10 reviews and an average rating of at least 4
+
+I posted a new song to the database.
+
+I manually added 10 reviews of that song to the database with a rating of 4 (because one user can only add one review).
+
+The song no longer appeared on the "contenders" page and now appeared on the "best songs" page
+
+## Test that songs are deleted from the database when they have at least 10 reviews and an average rating of 2 or less
+
+I manually added 9 reviews to a song in database with a rating of 2 (because one user can only add one review).
+
+I logged in and posted another review with a rating of 2.
+
+The song was deleted from the database.
+
+A flash image told me the song was deleted and I was redirected to the best songs page.
+
 
 ### Outstanding issues
 
@@ -223,13 +238,11 @@ app.py:11:4: W0611: Unused import env (unused-import)
 
 
 
-Version control:
-======
+# Version control:
 
 This project was developed using Gitpod, committed to git and pushed to GitHub using the built in function within Gidpod.
 
-Deployment:
-======
+# Deployment:
 
 All of the files necessary to run this website have been stored in a GitHub repository. If you would like to work on your own version of this site or use it as a template for your own work, you have the option to either fork, or make a clone of the original repo.
 
@@ -256,74 +269,62 @@ MONGODB PASSWORD - The password for your MongoDB Database The web app will not f
 ### Heroku app creation
 As this is a full-stack website it has been deployed to Heroku.com using the following procedure:
 
-Log in to Heroku.com
-From the Dashboard, select the "New" button on the Top-Right of the screen
-Select "Create new app"
-Insert your app name
-Heroku will let you know whether your chosen name is available
-Select the most appropriate region for your location
-Click the "Create app" button
+1. Log in to Heroku.com
+2. From the Dashboard, select the "New" button on the Top-Right of the screen
+3. Select "Create new app"
+4. Insert your app name
+5. Heroku will let you know whether your chosen name is available
+6. Select the most appropriate region for your location
+7. Click the "Create app" button
 
 ### Heroku Deployment
 The above steps will automatically bring you to the "Deploy" tab of your new app.
 
+*   In the "Deployment Method" section select Github
+*   Once selected a Connect to GitHub section will display below
+*   Ensure your profile is displayed
+*   If not type in your GitHub username
 
-In the "Deployment Method" section select Github
-Once selected a Connect to GitHub section will display below
-Ensure your profile is displayed
-If not type in your GitHub username
-Heroku + Github Repo
-Search for, and select the Repo corresponding to the Heroku app
-Click "Connect"
-This app uses configuration settings and secret keys for MongoDB and Session cookies respectively, which Heroku requires in order for the website to function as desired. To do this you need to set the Config Vars within Heroku:
-Under the "Settings" tab, in the Config Vars section select the "Reveal Config Vars" button.
-This will reveal a form for inputting the key and value pairs necessary to connect to the app.
+#### Heroku + Github Repo
+*   Search for, and select the Repo corresponding to the Heroku app
+*   Click "Connect"
 
-KEY	VALUE
-IP	0.0.0.0
-PORT	5000
-SECRET KEY	Randomly Generated Fort Knox Key
-MONGO_URI	Your unique MongoDB URI
-MONGO_DBNAME	Your unique Mongo DB name
-The above Mongo_URI variable can be found in the appropriate Mongo DB Project under Cluster by selecting "Connect"
+#### Set the Config Vars within Heroku
 
-Select "Clusters"
-Select "Connect"
-Select "Connect your application"
-Choose your Driver and Version
-Remember to substitute in your own DBNAME and Password
-Copy your connection string
-Enabling Automatic Deployment
-Select the Heroku "Deploy" tab
-In the "Automatic deploys" section select the branch you wish to use
-There is no difference between the developed version of W3Recipes and that deployed on Heroku
-
-Credits:
-======
-
-add space in html: https://www.wikihow.com/Insert-Spaces-in-HTML
-
-length of list in jinja:
-https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-template
+*   Under the "Settings" tab, in the Config Vars section select the "Reveal Config Vars" button.
+*   This will reveal a form for inputting the key and value pairs necessary to connect to the app.
+*   Enter the values stored in your .env file for IP, PORT, SECRET KEY, MONGO_URI, and MONGO_DBNAME
 
 
-Get average: https://stackoverflow.com/questions/9039961/finding-the-average-of-a-list
+#### Enabling Automatic Deployment
+
+*   Select the Heroku "Deploy" tab
+*   In the "Automatic deploys" section select the branch you wish to use
+*   There is no difference between the developed version of W3Recipes and that deployed on Heroku
+
+# Credits:
+
+Add space in html: https://www.wikihow.com/Insert-Spaces-in-HTML
+
+Get length of list in jinja: https://stackoverflow.com/questions/1465249/get-lengths-of-a-list-in-a-jinja2-template
+
+Get average value: https://stackoverflow.com/questions/9039961/finding-the-average-of-a-list
 
 Check if key exists in dictionary: https://stackoverflow.com/questions/1602934/check-if-a-given-key-already-exists-in-a-dictionary
 
 Star rating: https://codepen.io/jamesbarnett/pen/vlpkh
 
-https://stackoverflow.com/questions/8206565/check-uncheck-checkbox-with-javascript
+Check/uncheck box with javascript: https://stackoverflow.com/questions/8206565/check-uncheck-checkbox-with-javascript
 
-https://stackoverflow.com/questions/7774814/remove-white-space-below-image
+Remove white space below an image: https://stackoverflow.com/questions/7774814/remove-white-space-below-image
 
-https://www.ginifab.com/feeds/pms/color_picker_from_image.php
+Pick a color from an image: https://www.ginifab.com/feeds/pms/color_picker_from_image.php
 
-http://stackoverflow.com/questions/10361460/how-can-i-change-or-remove-html5-form-validation-default-error-messages
+Change default hmtl 5 error message: http://stackoverflow.com/questions/10361460/how-can-i-change-or-remove-html5-form-validation-default-error-messages
 
-https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
+Positioning footer: https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
 
-
+Code Institute Task Mini Project
 
 Mongo commands
 
@@ -331,20 +332,14 @@ https://www.w3schools.com/python/python_mongodb_update.asp
 https://docs.mongodb.com/manual/reference/operator/update/unset/
 https://stackoverflow.com/questions/22901788/remove-attribute-from-all-mongodb-documents-using-python-and-pymongo
 
-
-
-
 U2 song details: 
 
 https://en.wikipedia.org/wiki/With_or_Without_You
 https://en.wikipedia.org/wiki/Pride_(In_the_Name_of_Love)
 https://en.wikipedia.org/wiki/New_Year%27s_Day_(U2_song)
 
+# Acknowledgements: 
 
-
-
-Acknowledgements: 
-======
 My Code Institute Mentor, Rohit
 
 
