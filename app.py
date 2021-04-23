@@ -247,7 +247,6 @@ def get_reviews(song_id):
     Returns:
         Renders the get_reviews template
     """
-    print("GET REVIEWS!!!!!!!!!!")
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
     users_who_reviewed = list(
@@ -297,6 +296,7 @@ def get_reviews(song_id):
             insert_new_review(song_id, song, review)
         reviews = list(
             mongo.db.reviews.find({"song": ObjectId(song_id)}))
+        user_review = review
     return render_template("get_reviews.html", song=song, reviews=reviews,
                            user_review_exists=user_review_exists, user_review=user_review,
                            user_logged_in="user" in session)
@@ -313,6 +313,8 @@ def delete_review(user_review_id):
         Renders the get_songs template if review is successfully deleted
     """
     review = mongo.db.reviews.find_one({"_id": ObjectId(user_review_id)})
+    print("user_review_id", user_review_id)
+    print("REVIEW", review)
     if "user" not in session:
         return render_template("login.html")
     if review["user"] != session["user"]:
