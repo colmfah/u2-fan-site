@@ -324,6 +324,8 @@ Change default hmtl 5 error message: http://stackoverflow.com/questions/10361460
 
 Positioning footer: https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
 
+Displaying images: https://flask.palletsprojects.com/en/1.1.x/tutorial/static/
+
 Code Institute Task Mini Project
 
 Mongo commands
