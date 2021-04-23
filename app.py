@@ -247,6 +247,7 @@ def get_reviews(song_id):
     Returns:
         Renders the get_reviews template
     """
+    print("GET REVIEWS!!!!!!!!!!")
     song = mongo.db.songs.find_one({"_id": ObjectId(song_id)})
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
     users_who_reviewed = list(
@@ -291,15 +292,11 @@ def get_reviews(song_id):
             return render_template("songs.html", songs=best_songs_with_ratings)
         if user_review_exists:
             update_existing_review(song_id, review)
-            return render_template("get_reviews.html",
-                                   song=song, reviews=reviews,
-                                   user_review_exists=True,
-                                   user_review=review, user_logged_in="user" in session)
-        insert_new_review(song_id, song, review)
-        return render_template("get_reviews.html",
-                               song=song, reviews=reviews,
-                               user_review_exists=True,
-                               user_review=review, user_logged_in="user" in session)
+        else:
+            user_review_exists = True,
+            insert_new_review(song_id, song, review)
+        reviews = list(
+            mongo.db.reviews.find({"song": ObjectId(song_id)}))
     return render_template("get_reviews.html", song=song, reviews=reviews,
                            user_review_exists=user_review_exists, user_review=user_review,
                            user_logged_in="user" in session)
@@ -341,5 +338,4 @@ def handle_exception(exception):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
-s
+            debug=True)
