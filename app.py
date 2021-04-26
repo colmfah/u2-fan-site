@@ -278,21 +278,17 @@ def get_reviews(song_id):
         if average_rating < 3 and len(ratings) >= 10:
             mongo.db.songs.remove({"_id": ObjectId(song_id)})
             flash("Song Deleted Because of Poor Reviews")
-            all_songs = list(mongo.db.songs.find())
-            best_songs = filter(get_best_songs, all_songs)
-            best_songs_with_ratings = list(map(calculate_ratings, best_songs))
-            best_songs_with_ratings.sort(reverse=True,
-                                         key=lambda song: song["rating"])
-            return render_template("songs.html", songs=best_songs_with_ratings)
         if user_review_exists:
             update_existing_review(song_id, review)
         else:
             user_review_exists = True
             insert_new_review(review)
-        reviews = list(
-            mongo.db.reviews.find({"song": ObjectId(song_id)}))
-        user_review = review
-    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
+        all_songs = list(mongo.db.songs.find())
+        best_songs = filter(get_best_songs, all_songs)
+        best_songs_with_ratings = list(map(calculate_ratings, best_songs))
+        best_songs_with_ratings.sort(reverse=True,
+                                     key=lambda song: song["rating"])
+        return render_template("songs.html", songs=best_songs_with_ratings)
     return render_template("get_reviews.html", song=song, reviews=reviews,
                            user_review_exists=user_review_exists, user_review=user_review,
                            user_logged_in="user" in session)
@@ -334,4 +330,4 @@ def handle_exception(exception):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)
