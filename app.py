@@ -1,3 +1,5 @@
+"""Contains views for the u2 fan site"""
+
 import os
 import statistics
 from flask import (
@@ -285,7 +287,7 @@ def get_reviews(song_id):
         if user_review_exists:
             update_existing_review(song_id, review)
         else:
-            user_review_exists = True,
+            user_review_exists = True
             insert_new_review(review)
         reviews = list(
             mongo.db.reviews.find({"song": ObjectId(song_id)}))
@@ -307,16 +309,14 @@ def delete_review(user_review_id):
         Renders the get_songs template if review is successfully deleted
     """
     review = mongo.db.reviews.find_one({"_id": ObjectId(user_review_id)})
-    print("user_review_id", user_review_id)
-    print("REVIEW", review)
     if "user" not in session:
         return render_template("login.html")
     if review["user"] != session["user"]:
         flash("This is not your review!")
-    else:
-        mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
-        flash("Review Deleted")
-        return redirect(url_for("get_songs"))
+        return None
+    mongo.db.reviews.remove({"_id": ObjectId(user_review_id)})
+    flash("Review Deleted")
+    return redirect(url_for("get_songs"))
 
 
 @app.errorhandler(Exception)
