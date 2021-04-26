@@ -327,7 +327,7 @@ def handle_exception(exception):
     Returns:
         Renders the get_songs template
     """
-    flash("An error occurred: 500")
+    flash("An error occurred: " + str(exception))
     return redirect(url_for("get_songs"))
 
 
