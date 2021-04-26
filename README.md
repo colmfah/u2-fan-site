@@ -123,16 +123,25 @@ Wireframes are available [here](/docs/wireframes.pdf)
 
 # Technology:
 
-HTML5
-CSS3
-Gitpod
-Flask
-Jinja
-Heroku
+*   HTML5
+*   CSS3
+*   Gitpod
+*   Flask
+*   Jinja
+*   Heroku
+
+My requirements.txt file contains the following:
+
+*   click==7.1.2
+*   dnspython==2.1.0
+*   Flask==1.1.2
+*   Flask-PyMongo==2.3.0
+*   itsdangerous==1.1.0
+*   pymongo==3.11.3
+*   Werkzeug==1.0.1
 
 
-Testing:
-======
+# Testing:
 
 Validated CSS using https://jigsaw.w3.org/css-validator.
 
@@ -140,11 +149,23 @@ Validated HTML using https://validator.w3.org/.
 
 Validated Python using Pylint
 
-Validated javascript using JSHint.com
+Validated javascript using https://jshint.com/
 
-Tested website on chrome, firefox and safari on a desktop map and tested on chrome and firefox on an andriod mobile.
+Tested website on chrome, firefox and safari on a desktop mac and tested on chrome and firefox on an andriod mobile.
 
-Used google chrome simulator to test for responsiveness for moto g4, galaxy s5, pixel 2, pixel 2xl, iphone5/se, iphone 6/7/8, iphone 6/7/8 plus, iphone x, ipad, ipad pro, surface duo, galaxy fold and desktop.
+Used google chrome simulator to test for responsiveness for:
+*   moto g4 
+*   galaxy s5
+*   pixel 2
+*   pixel 2xl
+*   iphone5/se
+*   iphone 6/7/8
+*   iphone 6/7/8 plus
+*   iphone x
+*   ipad
+*   ipad pro
+*   surface duo
+*   galaxy fold and desktop.
 
 
 # Test cases:
@@ -253,22 +274,22 @@ All of the files necessary to run this website have been stored in a GitHub repo
 ### Forking the GitHub Repository
 By forking the GitHub Repository you can make a copy of the original repository on your GitHub account, which enables you to view and/or make your own changes without affecting the original repository. This can be achieved using the following steps...
 
-Log in to GitHub and locate the GitHub Repository
-At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
-You should now have a copy of the original repository in your GitHub account.
+*   Log in to GitHub and locate the GitHub Repository
+*   At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
+*   You should now have a copy of the original repository in your GitHub account.
 
 ### Making a Local Clone
-Log in to GitHub and locate the GitHub Repository
-Under the repository name, click "Clone or download".
-To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
-Open Git Bash
-Change the current working directory to the location where you want the cloned directory to be made.
-Type git clone, and then paste the URL you copied in Step 3.
-It is important that you create an env.py file to save your Environment Variables such as:
-IP - (0.0.0.0 Used, but not recommended for production apps)
-PORT - (5000 used)
-MONGODB URI - The URI for your MongoDB Database
-MONGODB PASSWORD - The password for your MongoDB Database The web app will not function without these variables.
+*   Log in to GitHub and locate the GitHub Repository
+*   Under the repository name, click "Clone or download".
+*   To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+*   Open Git Bash
+*   Change the current working directory to the location where you want the cloned directory to be made.
+*   Type "git clone", and then paste the URL you copied in Step 3.
+*   It is important that you create an env.py file to save your Environment Variables such as:
+*   IP - (0.0.0.0 Used, but not recommended for production apps)
+*   PORT - (5000 used)
+*   MONGODB URI - The URI for your MongoDB Database
+*   MONGODB PASSWORD - The password for your MongoDB Database The web app will not function without these variables.
 
 ### Heroku app creation
 As this is a full-stack website it has been deployed to Heroku.com using the following procedure:
