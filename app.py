@@ -96,20 +96,13 @@ def update_existing_review(song_id, review):
     reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
 
 
-def insert_new_review(song_id, song, review):
-    """updates existing review
+def insert_new_review(review):
+    """saves new review
     Args:
-        song:  song dictionary from database
         review: dictionary of review data that user has submitted
-    Returns:
-        Renders the get_review template
     """
     mongo.db.reviews.insert_one(review)
     flash("Review Saved")
-    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
-    return render_template("get_reviews.html",
-                           song=song, reviews=reviews, user_review_exists=True,
-                           user_review=review, user_logged_in="user" in session)
 
 
 @ app.route("/")
@@ -293,10 +286,11 @@ def get_reviews(song_id):
             update_existing_review(song_id, review)
         else:
             user_review_exists = True,
-            insert_new_review(song_id, song, review)
+            insert_new_review(review)
         reviews = list(
             mongo.db.reviews.find({"song": ObjectId(song_id)}))
         user_review = review
+    reviews = list(mongo.db.reviews.find({"song": ObjectId(song_id)}))
     return render_template("get_reviews.html", song=song, reviews=reviews,
                            user_review_exists=user_review_exists, user_review=user_review,
                            user_logged_in="user" in session)
@@ -333,7 +327,8 @@ def handle_exception(exception):
     Returns:
         Renders the get_songs template
     """
-    # flash("An error occurred: 500")
+    print("exception occurred" + str(exception))
+    flash("An error occurred: 500")
     return redirect(url_for("get_songs"))
 
 
