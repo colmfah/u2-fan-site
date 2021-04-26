@@ -256,13 +256,13 @@ The song was deleted from the database.
 A flash image told me the song was deleted and I was redirected to the best songs page.
 
 
-### Outstanding issues
+## Outstanding issues
 
-## Pylint errors
+### Pylint errors
 
 app.py:13:4: W0611: Unused import env (unused-import)
 
-## Bug: Border around body to keep footer in place
+### Bug: Border around body to keep footer in place
 
 If there isn't a border around the body, the footer appears in the wrong place on some pages.
 As a result a small white line is visible around the page
