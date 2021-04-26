@@ -55,7 +55,7 @@ html{
 body{
     position: relative;
     min-height: 100vh;
-    border: 0.1px solid rgba(0,0,0,0);
+    border: 0.0000000001px solid rgba(0,0,0,0);
 }
 
 #content-wrap{
