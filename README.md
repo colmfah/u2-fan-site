@@ -44,6 +44,8 @@ When a song has at least 10 reviews, and its average rating is less than 2, it w
 
 #### Contenders:
 
+![Contenders](/assets/images/contenders.png)
+
 This page will contain a nav and an accordion containing the name of each "contender song", its year, a "review" button and its average rate. When the user clicks on the review button or rating, it will link to the review for that song. When the user clicks anywhere else, the accordion will expand and more details about the song will be provided.
 
 In order to be listed as a "contender song", the song must:
@@ -57,6 +59,8 @@ When a song has at least 10 reviews, and its average rating is at least 3, it wi
 
 #### Review Page:
 
+![Review](/assets/images/review.png)
+
 This page displays all reviews the song has received and allows logged in users to review the song or edit or delete their previous review.
 
 #### Potential Best Songs:
@@ -67,7 +71,9 @@ It will display an error if the song has already been submitted.
 
 If the song is successfully added, it will then be displayed in the contenders page and the user will be redirected.
 
-#### Sign Up Page:
+#### Register Page:
+
+![Register](/assets/images/register.png)
 
 This page will contain a nav bar and a form to provide email address and password.
 
@@ -81,6 +87,8 @@ Otherwise it will create a new user, log them in and redirect to the best songs 
 
 
 #### Log In Page:
+
+![Log In](/assets/images/login.png)
 
 This page will contain a nav bar and a form to provide email address and password.
 
@@ -195,20 +203,20 @@ I submit the song name, the song year and the song description and I click submi
 If my input meets the requirements, it is saved in the database and a flash message is displayed.
 Otherwise an error message is displayed.
 
-## Test to ensure users that are not logged in cannot access features exclusive to logged in user
+#### Test to ensure users that are not logged in cannot access features exclusive to logged in user
 
 I logged into my account. I clicked on the reviews section of a song. I copied the url. I pasted it into chrome incognito mode. I could did not have the option to edit or delete the review in chrome incognito mode.
 
 In chrome I naviated to 'propose songs' page. I copied the url. I pasted it into chrome incognito mode. I could not propose new songs. It redirected me to the login page
 
 
-## Test to ensure 404 errors redirect to best songs page
+#### Test to ensure 404 errors redirect to best songs page
 
 I changed the end of the url to /sdkfslkdfjslj
 
 It redirected me to the best songs page.
 
-## Test that songs move from "contenders" page to "best songs" page when they have at least 10 reviews and an average rating of at least 4
+#### Test that songs move from "contenders" page to "best songs" page when they have at least 10 reviews and an average rating of at least 4
 
 I posted a new song to the database.
 
@@ -216,7 +224,7 @@ I manually added 10 reviews of that song to the database with a rating of 4 (bec
 
 The song no longer appeared on the "contenders" page and now appeared on the "best songs" page
 
-## Test that songs are deleted from the database when they have at least 10 reviews and an average rating of 2 or less
+#### Test that songs are deleted from the database when they have at least 10 reviews and an average rating of 2 or less
 
 I manually added 9 reviews to a song in database with a rating of 2 (because one user can only add one review).
 
@@ -231,11 +239,7 @@ A flash image told me the song was deleted and I was redirected to the best song
 
 ## Pylint errors
 
-app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-app.py:309:0: R1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
-app.py:330:21: W0613: Unused argument 'exception' (unused-argument)
-app.py:11:4: W0611: Unused import env (unused-import)
-
+app.py:13:4: W0611: Unused import env (unused-import)
 
 
 # Version control:
